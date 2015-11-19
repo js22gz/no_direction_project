@@ -1,0 +1,22 @@
+{
+  "name": "no_direction_project",
+  "version": "0.0.1",
+  "description": "A project",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/js22gz/no_direction_project.git"
+  },
+  "keywords": [
+    "project"
+  ],
+  "author": "Jonatan Skäryd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/js22gz/no_direction_project/issues"
+  },
+  "homepage": "https://github.com/js22gz/no_direction_project#readme"
+}
