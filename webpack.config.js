@@ -1,18 +1,23 @@
+var webpack = require('webpack');  
+
 module.exports = {
-  entry: './src/index.js',
-  output: {
-    filename: 'bundle.js'       
-  },
-module: {
-	   loaders: [
-      {
-        test: /.js?$/,
-        loader: 'babel',
-        exclude: /node_modules/,
-        query: {
-          presets: ['es2015', 'react']
-        }
-      }
+  entry: [
+    'webpack/hot/only-dev-server',
+    "./src/index.js"
+  ],
+    output: {
+        filename: "bundle.js"
+    },
+    module: {
+        loaders: [
+            { test: /\.js?$/, loaders: ['react-hot', 'babel'], exclude: /node_modules/ },
+            { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader', query: { presets: ['es2015', 'react'] }},
+            { test: /\.css$/, loader: "style!css" }
+        ]
+    },
+
+    plugins: [
+      new webpack.NoErrorsPlugin()
     ]
-}
+
 };
