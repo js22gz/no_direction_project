@@ -1,5 +1,5 @@
 var Redux = require('redux'),
-    countReducer = require('./reducers/count'),
+	countReducer = require('./reducers/count'),
     initialState = require('./initial-state');
 
 var reducers = Redux.combineReducers({

@@ -1,15 +1,3 @@
-/*
-  "scripts": {
-    "start": "webpack-dev-server --hot --progress --colors",
-    "build": "webpack --progress --colors"
-  },
-*/
-/*
-   "scripts": {
-        "build": "browserify --debug -t [reactify --es6] src/index.js > bundle.js"
-    },
-*/
-
 var webpack = require('webpack');  
 var path = require('path');
 

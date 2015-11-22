@@ -1,5 +1,5 @@
-var React = require('react'),
-    Link = require('react-router').Link;
+import React from "react";
+import {Link} from "react-router";
 
 var Nav = React.createClass({
     render: function(){
@@ -8,6 +8,7 @@ var Nav = React.createClass({
                 <ul>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/count">Count</Link></li>
+                    <li><Link to="/timeteller">Timeteller</Link></li>
                 </ul>
                 <div className="clear"/>
             </div>

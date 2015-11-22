@@ -1,11 +1,12 @@
 import React from 'react';
 
+var homeStyle= {color:'blue'};
+
 var Home = React.createClass({
     render: function(){
         return (
-            <div>
-                <h2>Hello World!</h2>
-                <p>Simple static component with not special content at all.</p>
+            <div style={homeStyle}>
+                <h2>Well hello! This is a project!</h2>
             </div>
         );
     }

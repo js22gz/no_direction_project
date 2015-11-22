@@ -1,4 +1,4 @@
-var initialState = require('./../initial-state');
+import initialState from "./../initial-state";
 
 var CountReducer = function(state, action){
     var newState = Object.assign({}, state);

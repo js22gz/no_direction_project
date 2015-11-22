@@ -1,11 +1,13 @@
-var React = require('react'),
-    Nav = require('./nav');
+import React from "react";
+import Nav from "./nav";
+
+var wrapStyle = {backgroundColor:'silver'};
 
 var Wrap = React.createClass({
     render: function(){
         return (
-            <div id="wrap">
-                <h1>React, React Router &amp; Redux example</h1>
+            <div id="wrap" style={wrapStyle}>
+                <h1>Project of no direction</h1>
                 <Nav/>
                 {this.props.children}
             </div>
