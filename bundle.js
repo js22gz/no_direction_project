@@ -61,7 +61,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var store = __webpack_require__(228),
-	    routes = __webpack_require__(231);
+	    routes = __webpack_require__(232);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRedux.Provider,
@@ -25623,10 +25623,12 @@
 
 	var Redux = __webpack_require__(217),
 	    countReducer = __webpack_require__(229),
+	    timerReducer = __webpack_require__(231),
 	    initialState = __webpack_require__(230);
 
 	var reducers = Redux.combineReducers({
-	    count: countReducer
+	    count: countReducer,
+	    timer: timerReducer
 	});
 
 	var store = Redux.createStore(reducers, initialState());
@@ -25671,6 +25673,10 @@
 	    return {
 	        count: {
 	            currentValue: 0
+	        },
+	        timer: {
+	            timerOn: false,
+	            timerTime: 0
 	        }
 	    };
 	};
@@ -25679,39 +25685,35 @@
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
-	var _react = __webpack_require__(1);
+	var _initialState = __webpack_require__(230);
 
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(159);
-
-	var _wrap = __webpack_require__(232);
-
-	var _wrap2 = _interopRequireDefault(_wrap);
-
-	var _home = __webpack_require__(234);
-
-	var _home2 = _interopRequireDefault(_home);
-
-	var _count = __webpack_require__(235);
-
-	var _count2 = _interopRequireDefault(_count);
-
-	var _countdown = __webpack_require__(237);
-
-	var _countdown2 = _interopRequireDefault(_countdown);
+	var _initialState2 = _interopRequireDefault(_initialState);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	module.exports = _react2.default.createElement(
-	    _reactRouter.Route,
-	    { path: "/", component: _wrap2.default },
-	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _home2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: "/count", component: _count2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: "/countdown", component: _countdown2.default })
-	);
+	var TimerReducer = function TimerReducer(state, action) {
+	    var newState = Object.assign({}, state);
+	    switch (action.type) {
+	        case 'TIMER_SET':
+	            newState.timerTime = action.timerTime;
+	            return newState;
+	        case 'TIMER_START':
+	            newState.timerOn = true;
+	            return newState;
+	        case 'TIMER_STOP':
+	            newState.timerOn = false;
+	            return newState;
+	        case 'TIMER_TICK':
+	            newState.timerTime -= 1000;
+	            return newState;
+	        default:
+	            return state || (0, _initialState2.default)().timer;
+	    }
+	};
+
+	module.exports = TimerReducer;
 
 /***/ },
 /* 232 */
@@ -25723,7 +25725,50 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _nav = __webpack_require__(233);
+	var _reactRouter = __webpack_require__(159);
+
+	var _wrap = __webpack_require__(233);
+
+	var _wrap2 = _interopRequireDefault(_wrap);
+
+	var _home = __webpack_require__(235);
+
+	var _home2 = _interopRequireDefault(_home);
+
+	var _count = __webpack_require__(236);
+
+	var _count2 = _interopRequireDefault(_count);
+
+	var _stopwatch = __webpack_require__(238);
+
+	var _stopwatch2 = _interopRequireDefault(_stopwatch);
+
+	var _timer = __webpack_require__(239);
+
+	var _timer2 = _interopRequireDefault(_timer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = _react2.default.createElement(
+	    _reactRouter.Route,
+	    { path: "/", component: _wrap2.default },
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _home2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "/count", component: _count2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "/stopwatch", component: _stopwatch2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "/timer", component: _timer2.default })
+	);
+
+/***/ },
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _nav = __webpack_require__(234);
 
 	var _nav2 = _interopRequireDefault(_nav);
 
@@ -25750,7 +25795,7 @@
 	module.exports = Wrap;
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25801,8 +25846,17 @@
 	                    { style: liStyle },
 	                    _react2.default.createElement(
 	                        _reactRouter.Link,
-	                        { to: "/countdown" },
-	                        "Countdown"
+	                        { to: "/stopwatch" },
+	                        "Stopwatch"
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "li",
+	                    { style: liStyle },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: "/timer" },
+	                        "Timer"
 	                    )
 	                )
 	            ),
@@ -25814,7 +25868,7 @@
 	module.exports = Nav;
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25846,7 +25900,7 @@
 	module.exports = Home;
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25854,7 +25908,7 @@
 	var React = __webpack_require__(1),
 	    ptypes = React.PropTypes,
 	    ReactRedux = __webpack_require__(210),
-	    actions = __webpack_require__(236);
+	    actions = __webpack_require__(237);
 
 	var Count = React.createClass({
 	    displayName: 'Count',
@@ -25914,7 +25968,7 @@
 	module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Count);
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25925,11 +25979,33 @@
 	    },
 	    countDecrease: function countDecrease() {
 	        return { type: 'COUNT_DEC' };
+	    },
+	    countdownTimerTick: function countdownTimerTick() {
+	        return { type: 'COUNTDOWN_DECREASE' };
+	    },
+	    countdownTimerStart: function countdownTimerStart() {
+	        return { type: 'COUNTDOWN_START' };
+	    },
+	    countdownTimerStop: function countdownTimerStop() {
+	        return { type: 'COUNTDOWN_STOP' };
+	    },
+	    timerSet: function timerSet(timerTime) {
+	        return { type: 'TIMER_SET', timerTime: timerTime };
+	    },
+	    timerTick: function timerTick() {
+	        return { type: 'TIMER_TICK' };
+	    },
+	    timerStart: function timerStart() {
+	        return { type: 'TIMER_START' };
+	    },
+	    timerStop: function timerStop() {
+	        return { type: 'TIMER_STOP' };
 	    }
+
 	};
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25940,36 +26016,184 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var countdownStyle = { color: 'blue' };
+	/*
+	Stolen from: http://www.sitepoint.com/watch-capturing-time-in-react/
+	*/
 
-	var Countdown = _react2.default.createClass({
-	    displayName: 'Countdown',
+	var stopwatchStyle = { color: 'blue' };
 
-	    componentDidMount: function componentDidMount() {
-	        this.interval = setInterval(this.getTime, 1000);
-	    },
-	    getTime: function getTime() {
-	        return new Date();
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'div',
-	            { style: countdownStyle },
-	            _react2.default.createElement(
-	                'h2',
-	                null,
-	                'Countdown'
-	            ),
-	            _react2.default.createElement(
-	                'h3',
-	                null,
-	                getTime.toString()
-	            )
-	        );
-	    }
+	var Stopwatch = _react2.default.createClass({
+		displayName: 'Stopwatch',
+
+		getInitialState: function getInitialState() {
+			return { secondsElapsed: 0 };
+		},
+
+		getSeconds: function getSeconds() {
+			return ('0' + this.state.secondsElapsed % 60).slice(-2);
+		},
+
+		getMinutes: function getMinutes() {
+			return Math.floor(this.state.secondsElapsed / 60);
+		},
+		handleStartClick: function handleStartClick() {
+			var _this = this;
+
+			this.incrementer = setInterval(function () {
+				_this.setState({
+					secondsElapsed: _this.state.secondsElapsed + 1
+				});
+			}, 1000);
+		},
+		handleStopClick: function handleStopClick() {
+			clearInterval(this.incrementer);
+			this.setState({ lastClearedIncrementer: this.incrementer });
+		},
+		handleResetClick: function handleResetClick() {
+			this.setState({ secondsElapsed: 0 });
+		},
+
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'h1',
+					null,
+					this.getMinutes(),
+					':',
+					this.getSeconds()
+				),
+				this.props.timerOn == false ? _react2.default.createElement(
+					'button',
+					{ type: 'button', onClick: this.handleStartClick },
+					'Start'
+				) : _react2.default.createElement(
+					'button',
+					{ type: 'button', onClick: this.handleStopClick },
+					'Stop'
+				),
+				this.state.secondsElapsed !== 0 ? _react2.default.createElement(
+					'button',
+					{ type: 'button', onClick: this.handleResetClick },
+					'Reset'
+				) : null
+			);
+		}
 	});
 
-	module.exports = Countdown;
+	module.exports = Stopwatch;
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ptypes = _react2.default.PropTypes,
+	    ReactRedux = __webpack_require__(210),
+	    actions = __webpack_require__(237);
+
+	var Timer = _react2.default.createClass({
+	  displayName: 'Timer',
+
+	  propTypes: {
+	    timerSet: ptypes.func.isRequired,
+	    timerStart: ptypes.func.isRequired
+	  },
+
+	  getSeconds: function getSeconds() {
+	    return ('0' + this.props.timerTime / 1000 % 60).slice(-2);
+	  },
+
+	  getMinutes: function getMinutes() {
+	    return Math.floor(this.props.timerTime / 1000 / 60);
+	  },
+
+	  checkTimer: function checkTimer() {
+	    if (this.props.timerTime === 0) {
+	      this.stopTimer();
+	    } else {
+	      this.props.timerTick();
+	    }
+	  },
+	  startTimer: function startTimer() {
+	    this.props.timerStart();
+	    this.incrementer = setInterval(this.checkTimer, 100 /*1000*/);
+	  },
+	  stopTimer: function stopTimer() {
+	    clearInterval(this.incrementer);
+	    this.props.timerStop();
+	  },
+	  setTimer: function setTimer() {
+	    var minutes = document.getElementById("minutes");
+	    var milliSeconds = minutes.value * 60 * 1000;
+	    this.props.timerSet(milliSeconds);
+	  },
+
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      this.props.timerTime === 0 ? _react2.default.createElement(
+	        'form',
+	        null,
+	        _react2.default.createElement('input', { type: 'number', id: 'minutes', name: 'minutes', min: '1', max: '60', defaultValue: '1' }),
+	        _react2.default.createElement(
+	          'button',
+	          { type: 'button', onClick: this.setTimer },
+	          'Set timer'
+	        )
+	      ) : _react2.default.createElement(
+	        'h1',
+	        null,
+	        'Timer: ',
+	        this.getMinutes(),
+	        ':',
+	        this.getSeconds()
+	      ),
+	      this.props.timerOn === false && this.props.timerTime != 0 ? _react2.default.createElement(
+	        'button',
+	        { type: 'button', onClick: this.startTimer },
+	        'Start'
+	      ) : '',
+	      this.props.timerOn === true && this.props.timerTime != 0 ? _react2.default.createElement(
+	        'button',
+	        { type: 'button', onClick: this.stopTimer },
+	        'Stop'
+	      ) : ''
+	    );
+	  }
+	});
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return state.timer;
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    timerSet: function timerSet(timerTime) {
+	      dispatch(actions.timerSet(timerTime));
+	    },
+	    timerTick: function timerTick() {
+	      dispatch(actions.timerTick());
+	    },
+	    timerStart: function timerStart() {
+	      dispatch(actions.timerStart());
+	    },
+	    timerStop: function timerStop() {
+	      dispatch(actions.timerStop());
+	    }
+	  };
+	};
+
+	module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Timer);
 
 /***/ }
 /******/ ]);
