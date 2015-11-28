@@ -25639,7 +25639,11 @@
 
 	'use strict';
 
-	var initialState = __webpack_require__(230);
+	var _initialState = __webpack_require__(230);
+
+	var _initialState2 = _interopRequireDefault(_initialState);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var CountReducer = function CountReducer(state, action) {
 	    var newState = Object.assign({}, state);
@@ -25651,7 +25655,7 @@
 	            newState.currentValue -= 1;
 	            return newState;
 	        default:
-	            return state || initialState().count;
+	            return state || (0, _initialState2.default)().count;
 	    }
 	};
 
@@ -25675,45 +25679,69 @@
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	var React = __webpack_require__(1),
-	    ReactRouter = __webpack_require__(159),
-	    Route = ReactRouter.Route,
-	    IndexRoute = ReactRouter.IndexRoute,
-	    Wrap = __webpack_require__(232),
-	    Home = __webpack_require__(234),
-	    Count = __webpack_require__(235);
+	var _react = __webpack_require__(1);
 
-	module.exports = React.createElement(
-	    Route,
-	    { path: '/', component: Wrap },
-	    React.createElement(IndexRoute, { component: Home }),
-	    React.createElement(Route, { path: '/count', component: Count })
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(159);
+
+	var _wrap = __webpack_require__(232);
+
+	var _wrap2 = _interopRequireDefault(_wrap);
+
+	var _home = __webpack_require__(234);
+
+	var _home2 = _interopRequireDefault(_home);
+
+	var _count = __webpack_require__(235);
+
+	var _count2 = _interopRequireDefault(_count);
+
+	var _countdown = __webpack_require__(237);
+
+	var _countdown2 = _interopRequireDefault(_countdown);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = _react2.default.createElement(
+	    _reactRouter.Route,
+	    { path: "/", component: _wrap2.default },
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _home2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "/count", component: _count2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "/countdown", component: _countdown2.default })
 	);
 
 /***/ },
 /* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	var React = __webpack_require__(1),
-	    Nav = __webpack_require__(233);
+	var _react = __webpack_require__(1);
 
-	var Wrap = React.createClass({
-	    displayName: 'Wrap',
+	var _react2 = _interopRequireDefault(_react);
+
+	var _nav = __webpack_require__(233);
+
+	var _nav2 = _interopRequireDefault(_nav);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Wrap = _react2.default.createClass({
+	    displayName: "Wrap",
 
 	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            { id: 'wrap' },
-	            React.createElement(
-	                'h1',
+	        return _react2.default.createElement(
+	            "div",
+	            { id: "wrap" },
+	            _react2.default.createElement(
+	                "h1",
 	                null,
-	                'React, React Router & Redux example'
+	                "Project of no direction"
 	            ),
-	            React.createElement(Nav, null),
+	            _react2.default.createElement(_nav2.default, null),
 	            this.props.children
 	        );
 	    }
@@ -25725,41 +25753,60 @@
 /* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	var React = __webpack_require__(1),
-	    Link = __webpack_require__(159).Link;
+	var _react = __webpack_require__(1);
 
-	var Nav = React.createClass({
-	    displayName: 'Nav',
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(159);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var liStyle = {
+	    display: "inline",
+	    margin: '1em'
+	};
+
+	var Nav = _react2.default.createClass({
+	    displayName: "Nav",
 
 	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            { id: 'nav' },
-	            React.createElement(
-	                'ul',
+	        return _react2.default.createElement(
+	            "div",
+	            { id: "nav" },
+	            _react2.default.createElement(
+	                "ul",
 	                null,
-	                React.createElement(
-	                    'li',
-	                    null,
-	                    React.createElement(
-	                        Link,
-	                        { to: '/' },
-	                        'Home'
+	                _react2.default.createElement(
+	                    "li",
+	                    { style: liStyle },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: "/" },
+	                        "Home"
 	                    )
 	                ),
-	                React.createElement(
-	                    'li',
-	                    null,
-	                    React.createElement(
-	                        Link,
-	                        { to: '/count' },
-	                        'Count'
+	                _react2.default.createElement(
+	                    "li",
+	                    { style: liStyle },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: "/count" },
+	                        "Count"
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "li",
+	                    { style: liStyle },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: "/countdown" },
+	                        "Countdown"
 	                    )
 	                )
 	            ),
-	            React.createElement('div', { className: 'clear' })
+	            _react2.default.createElement("div", { className: "clear" })
 	        );
 	    }
 	});
@@ -25778,22 +25825,19 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var homeStyle = { color: 'blue' };
+
 	var Home = _react2.default.createClass({
 	    displayName: 'Home',
 
 	    render: function render() {
 	        return _react2.default.createElement(
 	            'div',
-	            null,
+	            { style: homeStyle },
 	            _react2.default.createElement(
 	                'h2',
 	                null,
-	                'Hello World!'
-	            ),
-	            _react2.default.createElement(
-	                'p',
-	                null,
-	                'Simple static component with not special content at all.'
+	                'Well hello! This is a project!'
 	            )
 	        );
 	    }
@@ -25883,6 +25927,49 @@
 	        return { type: 'COUNT_DEC' };
 	    }
 	};
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var countdownStyle = { color: 'blue' };
+
+	var Countdown = _react2.default.createClass({
+	    displayName: 'Countdown',
+
+	    componentDidMount: function componentDidMount() {
+	        this.interval = setInterval(this.getTime, 1000);
+	    },
+	    getTime: function getTime() {
+	        return new Date();
+	    },
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'div',
+	            { style: countdownStyle },
+	            _react2.default.createElement(
+	                'h2',
+	                null,
+	                'Countdown'
+	            ),
+	            _react2.default.createElement(
+	                'h3',
+	                null,
+	                getTime.toString()
+	            )
+	        );
+	    }
+	});
+
+	module.exports = Countdown;
 
 /***/ }
 /******/ ]);

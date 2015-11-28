@@ -1,14 +1,20 @@
 import React from "react";
 import {Link} from "react-router";
 
+var liStyle = { 
+                    display:"inline", 
+                    margin:'1em'
+                };
+
 var Nav = React.createClass({
     render: function(){
         return (
             <div id="nav">
                 <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/count">Count</Link></li>
-                    <li><Link to="/timeteller">Timeteller</Link></li>
+                    <li style={liStyle}><Link to="/">Home</Link></li>
+                    <li style={liStyle}><Link to="/count">Count</Link></li>
+                    <li style={liStyle}><Link to="/stopwatch">Stopwatch</Link></li>
+                    <li style={liStyle}><Link to="/timer">Timer</Link></li>
                 </ul>
                 <div className="clear"/>
             </div>
