@@ -5,15 +5,6 @@ module.exports = {
     countDecrease: function(){
         return {type: 'COUNT_DEC'};
     },
-    countdownTimerTick: function() {
-    	return {type: 'COUNTDOWN_DECREASE'}
-    },
-    countdownTimerStart: function() {
-    	return {type: 'COUNTDOWN_START'}
-    },
-    countdownTimerStop: function() {
-    	return {type: 'COUNTDOWN_STOP'}
-    },
     timerSet: function(timerTime) {
     	return {type: 'TIMER_SET', timerTime}
     },

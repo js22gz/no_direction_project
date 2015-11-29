@@ -30,7 +30,7 @@ var Timer = React.createClass({
     },
     startTimer: function() {
     	this.props.timerStart();
-    	this.incrementer = setInterval(this.checkTimer, 100 /*1000*/);
+    	this.incrementer = setInterval(this.checkTimer, 1000);
 
     },
     stopTimer: function() {
