@@ -1,56 +1,45 @@
 import React from 'react';
+import {PropTypes} from 'react';
+
+var ReactRedux = require('react-redux');
+var actions = require('../actions');
+
 
 /*
 Stolen from: http://www.sitepoint.com/watch-capturing-time-in-react/
+then modified to fit in redux
 */
 
-var stopwatchStyle= {color:'blue'};
 
 var Stopwatch = React.createClass({
-	getInitialState: function() {
-		return {secondsElapsed: 0};
-	},
-
-	getSeconds: function() {
-		return('0' + this.state.secondsElapsed%60).slice(-2);
-	},
-
-	getMinutes: function() {
-		return Math.floor(this.state.secondsElapsed/60);
-	},
-	handleStartClick: function() {
-		var _this = this;
-
-		this.incrementer = setInterval(function() {
-			_this.setState({
-				secondsElapsed:
-				(_this.state.secondsElapsed + 1)
-			});
-		}, 1000)
-	},
-	handleStopClick: function() {
-		clearInterval(this.incrementer);
-		this.setState({lastClearedIncrementer: this.incrementer});
-	},
-	handleResetClick: function() {
-		this.setState({secondsElapsed:0});
-	},
-
     render: function(){
         return (
-        	<div>
-        	<h1>{this.getMinutes()}:{this.getSeconds()}</h1>
-        	{(this.props.timerOn==false)
-        		? <button type="button" onClick={this.handleStartClick}>Start</button>
-        		: <button type="button" onClick={this.handleStopClick}>Stop</button>
-        	}
-        	{(this.state.secondsElapsed!==0)
-        		? <button type="button" onClick={this.handleResetClick}>Reset</button>
-        		: null
-        	}
-        	</div>
+			<div>
+			<h1>{this.props.secondsElapsed}</h1>
+			</div>
         );
     }
 });
 
-module.exports = Stopwatch;
+var mapStateToProps = function(state){
+    return state.stopwatch;
+};
+
+var mapDispatchToProps = function(dispatch){
+    return {
+        stopwatchStart: function(){ 
+        	dispatch(actions.stopwatchStart());
+        },
+        stopwatchStop: function(){
+              dispatch(actions.stopwatchStop());
+        },        
+        stopwatchReset: function() {
+        	dispatch(actions.stopwatchReset());
+        },
+        stopwatchTick: function() {
+        	dispatch(actions.stopwatchTick());
+        }
+    }
+};
+
+module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Stopwatch);

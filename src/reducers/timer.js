@@ -4,7 +4,7 @@ var TimerReducer = function(state, action){
     var newState = Object.assign({}, state);
     switch(action.type){
         case 'TIMER_SET':
-                newState.timerTime=action.timerTime
+                newState.timerTime=action.timerTime;
                 return newState;
         case 'TIMER_START':
             newState.timerOn=true;

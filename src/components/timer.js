@@ -8,7 +8,10 @@ var Timer = React.createClass({
 
 	propTypes: {
        timerSet: ptypes.func.isRequired,
-       timerStart: ptypes.func.isRequired
+       timerStart: ptypes.func.isRequired,
+       timerStop: ptypes.func.isRequired,
+       timerTick: ptypes.func.isRequired,
+
     },
 
 	getSeconds: function() {
@@ -20,12 +23,11 @@ var Timer = React.createClass({
 	},
 
     checkTimer: function() {
-       	if(this.props.timerTime===0)
-       	{
-       		this.stopTimer();
+       	if(this.props.timerTime<=0) {
+	    	this.stopTimer();
         }
         else {
-	    	this.props.timerTick();
+       		this.props.timerTick();
         }  	
     },
     startTimer: function() {
@@ -46,9 +48,6 @@ var Timer = React.createClass({
 	render: function() 	{	
 		return(
 			<div>
-
-			
-
 			{(this.props.timerTime===0)
 				?<form>
 					<input type="number" id="minutes" name="minutes" min="1" max="60" defaultValue="1"/>
@@ -58,11 +57,11 @@ var Timer = React.createClass({
 			}
 			{(this.props.timerOn===false && this.props.timerTime!=0)
 				?<button type="button" onClick={this.startTimer}>Start</button>
-				:''
+				:null
 			}
 			{(this.props.timerOn===true && this.props.timerTime!=0)
 				?<button type="button" onClick={this.stopTimer}>Stop</button>
-				:''
+				:null
 			}
 			
 			</div>

@@ -1,11 +1,11 @@
 var Redux = require('redux'),
-	countReducer = require('./reducers/count'),
 	timerReducer = require('./reducers/timer'),
+	stopwatchReducer = require('./reducers/stopwatch'),
     initialState = require('./initial-state');
 
 var reducers = Redux.combineReducers({
-    count: countReducer,
     timer: timerReducer,
+    stopwatch: stopwatchReducer
 });
 
 var store = Redux.createStore(reducers, initialState());

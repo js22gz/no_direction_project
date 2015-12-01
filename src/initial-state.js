@@ -1,11 +1,12 @@
 module.exports = function(){
     return {
-        count: {
-            currentValue: 0
-        },
+    	stopwatch: {
+    		stopwatchOn:false,
+    		secondsElapsed:1
+    	},
         timer: {
-        		timerOn:false,
-        		timerTime:0
-        	}
-    	}
+        	timerOn:false,
+        	timerTime:0
+        }
+    }
 };

@@ -12,9 +12,9 @@ var Nav = React.createClass({
             <div id="nav">
                 <ul>
                     <li style={liStyle}><Link to="/">Home</Link></li>
-                    <li style={liStyle}><Link to="/count">Count</Link></li>
                     <li style={liStyle}><Link to="/stopwatch">Stopwatch</Link></li>
                     <li style={liStyle}><Link to="/timer">Timer</Link></li>
+                    <li style={liStyle}><Link to="/test">Test</Link></li>
                 </ul>
                 <div className="clear"/>
             </div>

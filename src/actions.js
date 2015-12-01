@@ -1,10 +1,16 @@
 module.exports = {
-    countIncrease: function(){
-        return {type: 'COUNT_INC'};
-    },
-    countDecrease: function(){
-        return {type: 'COUNT_DEC'};
-    },
+	stopwatchStart: function() {
+		return {type: 'STOPWATCH_START'}
+	},
+	stopwatchStop: function() {
+		return {type: 'STOPWATCH_STOP'}
+	},
+	stopwatchReset: function() {
+		return {type: 'STOPWATCH_RESET'}
+	},
+	stopwatchTick: function() {
+		return {type: 'STOPWATCH_TICK'}
+	},
     timerSet: function(timerTime) {
     	return {type: 'TIMER_SET', timerTime}
     },
