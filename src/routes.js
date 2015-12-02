@@ -1,17 +1,16 @@
-import React from "react";
-import {Route} from "react-router";
-import {IndexRoute} from "react-router";
-import Wrap from "./components/wrap";
-import Home from "./components/home";
-import Stopwatch from "./components/stopwatch";
-import Timer from "./components/timer";
-import Test from "./components/test";
+/*
+This is the "sitemap" of our app!
+*/
 
-module.exports = (
-    <Route path='/' component={Wrap}>
-        <IndexRoute component={Home}/>
-        <Route path='/stopwatch' component={Stopwatch}/>
-        <Route path='/timer' component={Timer}/>
-        <Route path='/test' component={Test}/>
+import React from 'react';
+import {Route, IndexRoute} from 'react-router';
+import {Wrapper} from './components/wrapper';
+import Home from './components/home';
+import Hero from './components/hero';
+
+export default (
+	<Route component={Wrapper} path="/" >
+        <IndexRoute component={Home} />
+        <Route path="/hero/:name" component={Hero} />
     </Route>
 );

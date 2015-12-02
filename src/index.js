@@ -1,14 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import {Router} from "react-router";
-import {Provider} from "react-redux";
+/*
+This is the entry point for the app! From here we merely import our routes definitions,
+then use React and React-DOM to render it.
+*/
 
-var store = require('./store'),
-    routes = require('./routes');
+import React from 'react';
+import {render} from 'react-dom';
+import {Router} from 'react-router';
+import {Provider} from 'react-redux';
+import store from './store';
+import routes from './routes';
 
-ReactDOM.render(
-    <Provider store={store}>
-        <Router routes={routes}/>
-    </Provider>,
-    document.getElementById('content')
+render(
+	<Provider store={store}>
+		<Router routes={routes}/>
+	</Provider>,
+	document.getElementById('root')
 );

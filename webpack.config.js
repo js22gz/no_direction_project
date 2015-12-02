@@ -1,9 +1,5 @@
-var webpack = require('webpack');  
-var path = require('path');
-
 module.exports = {
-
-  entry: {
+   entry: {
     js: "./src/index",
     html: "./index.html"
   },

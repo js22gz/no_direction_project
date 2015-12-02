@@ -1,38 +1,31 @@
 {
-  "name": "no_direction_project",
-  "version": "0.0.1",
-  "description": "A project",
-  "main": "./src/index.js",
-   "scripts": {
-    "start": "webpack-dev-server --hot --progress --colors",
-    "build": "webpack --progress --colors"
-  },
-
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/js22gz/no_direction_project.git"
-  },
-  "keywords": [
-    "project"
-  ],
-  "author": "Jonatan Skäryd",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/js22gz/no_direction_project/issues"
-  },
-  "homepage": "https://github.com/js22gz/no_direction_project#readme",
   "devDependencies": {
     "babel-core": "^6.2.1",
+    "babel-eslint": "^4.1.6",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "css-loader": "^0.23.0",
+    "eslint": "^1.10.3",
+    "eslint-config-defaults": "^7.1.1",
+    "eslint-loader": "^1.1.1",
+    "eslint-plugin-react": "^3.11.2",
+    "file-loader": "^0.8.5",
     "history": "^1.13.1",
-    "react-hot-loader": "^1.3.0",
-    "react-router": "^1.0.0",
-    "redux-devtools": "^2.1.5",
-    "webpack-dev-server": "^1.12.1"
-  },
-  "dependencies": {
+    "lodash": "^3.10.1",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
-    "redux": "^3.0.4"
+    "react-router": "^1.0.0",
+    "redux": "^3.0.4",
+    "redux-devtools": "^2.1.5",
+    "redux-thunk": "^1.0.0",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --hot --progress --colors",
+    "build": "webpack --progress --colors"
   }
 }
