@@ -21,7 +21,6 @@ export default
    				decrement:1000
    			});
    		};
-   			alert("Hello?");
    	},
 
 
@@ -32,17 +31,6 @@ export default
    			});
 
    		setTimeout(this.tickTimer(),1000);
-
-/*
-   			setTimeout(() => {
-                dispatch({
-                    type: constants.TIMER_TICK,
-                    decrement: 1000
-                });
-            },1000);
-   		};
-*/
-
    		};
    	},
 
@@ -53,14 +41,3 @@ export default
    	}
 
 };
-/*
-    setTimer(timerTime) {
-        return (dispatch, getState) => {
-        	alert("D:"+dispatch+" \n State: "+getState+"\n timerTime:"+timerTime);
-            dispatch({
-                type: constants.TIMER_SET,
-                timerTime:timerTime
-            });
-        };
-    }
-*/

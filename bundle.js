@@ -25769,7 +25769,7 @@
 	            newstate.timerOn = false;
 	            return newstate;
 	        case _constants2.default.TIMER_TICK:
-	            alert("Reducer-Tick");
+	            alert("Here");
 	            newstate.timerTime -= action.decrement;
 	            return newstate;
 	        default:
@@ -26022,10 +26022,10 @@
 /* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _constants = __webpack_require__(230);
@@ -26035,63 +26035,40 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = {
-	    setTimer: function setTimer(timerTime) {
-	        return {
-	            type: _constants2.default.TIMER_SET,
-	            timerTime: timerTime
-	        };
-	    },
-	    tickTimer: function tickTimer() {
-	        return function (dispatch, getState) {
-	            dispatch({
-	                type: _constants2.default.TIMER_TICK,
-	                decrement: 1000
-	            });
-	        };
-	        alert("Hello?");
-	    },
-	    startTimer: function startTimer() {
-	        var _this = this;
+	  setTimer: function setTimer(timerTime) {
+	    return {
+	      type: _constants2.default.TIMER_SET,
+	      timerTime: timerTime
+	    };
+	  },
+	  tickTimer: function tickTimer() {
+	    return function (dispatch, getState) {
+	      dispatch({
+	        type: _constants2.default.TIMER_TICK,
+	        decrement: 1000
+	      });
+	    };
+	  },
+	  startTimer: function startTimer() {
+	    var _this = this;
 
-	        return function (dispatch, getState) {
-	            dispatch({
-	                type: _constants2.default.TIMER_START
-	            });
+	    return function (dispatch, getState) {
+	      dispatch({
+	        type: _constants2.default.TIMER_START
+	      });
 
-	            setTimeout(_this.tickTimer(), 1000);
-
-	            /*
-	               			setTimeout(() => {
-	                            dispatch({
-	                                type: constants.TIMER_TICK,
-	                                decrement: 1000
-	                            });
-	                        },1000);
-	               		};
-	            */
-	        };
-	    },
-	    stopTimer: function stopTimer() {
-	        return {
-	            type: _constants2.default.TIMER_STOP
-	        };
-	    }
-	};
-	/*
-	    setTimer(timerTime) {
-	        return (dispatch, getState) => {
-	        	alert("D:"+dispatch+" \n State: "+getState+"\n timerTime:"+timerTime);
-	            dispatch({
-	                type: constants.TIMER_SET,
-	                timerTime:timerTime
-	            });
-	        };
-	    }
-	*/
-	/*
-	This module contains action creators. They are functions which will return an object describing the actions.
-	These actions are imported by Redux-aware components who need them, in our case it is just Home.
-	*/
+	      setTimeout(_this.tickTimer(), 1000);
+	    };
+	  },
+	  stopTimer: function stopTimer() {
+	    return {
+	      type: _constants2.default.TIMER_STOP
+	    };
+	  }
+	}; /*
+	   This module contains action creators. They are functions which will return an object describing the actions.
+	   These actions are imported by Redux-aware components who need them, in our case it is just Home.
+	   */
 
 /***/ },
 /* 238 */

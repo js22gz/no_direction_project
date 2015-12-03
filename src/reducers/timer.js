@@ -15,7 +15,7 @@ export default (state,action) => {
         newstate.timerOn=false;
         return newstate;
     case C.TIMER_TICK:
-        alert("Reducer-Tick");
+        alert("Here");
         newstate.timerTime-=action.decrement;
     	return newstate;
     default: return state || initialState().timer;
