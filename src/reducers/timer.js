@@ -15,9 +15,8 @@ export default (state,action) => {
         newstate.timerOn=false;
         return newstate;
     case C.TIMER_TICK:
-        alert("Here");
         newstate.timerTime-=action.decrement;
-    	return newstate;
+        return newstate;
     default: return state || initialState().timer;
     }
 };
