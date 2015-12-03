@@ -4,15 +4,14 @@ in our case Home and Hero.
 */
 
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import heroReducer from './reducers/heroes';
-import battlefieldReducer from './reducers/battlefield';
 import initialState from './initialstate';
 import thunk from 'redux-thunk'; // allows us to use asynchronous actions
+import timerReducer from './reducers/timer';
+
 
 
 let rootReducer = combineReducers({
-    heroes: heroReducer,   // this means heroReducer will operate on appState.heroes
-    battlefield: battlefieldReducer // battlefieldReducer will operate on appState.battlefield,
+	timer: timerReducer,   // this means heroReducer will operate on appState.heroes
 });
 
 export default applyMiddleware(thunk)(createStore)(rootReducer,initialState());

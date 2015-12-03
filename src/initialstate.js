@@ -9,35 +9,11 @@ import C  from './constants';
 
 export default () => {
     return {
-        // 'persistent' data on heroes
-        heroes: {
-            batman: {
-                quote: 'I\'m batman.',
-                kills: 0
-            },
-            superman: {
-                quote: 'I can fly!',
-                kills: 0
-            },
-            'spider-man': {
-                quote: 'Why don\'t you love me, Lois?',
-                kills: 0
-            },
-            'he-man': {
-                quote: 'By the power of Grayskull!',
-                kills: 0
-            }
-        },
-        // data on the current battle
-        battlefield: {
-            doing: {
-                batman: C.WAITING,
-                superman: C.WAITING,
-                'spider-man': C.WAITING,
-                'he-man': C.WAITING},
-            defcon: 4,
-            standing: 4,
-            log: ['Ready.... fight!']
+        timer:
+        {
+        	timerTime:0,
+        	timerOn: false        	
+
         }
     };
 };

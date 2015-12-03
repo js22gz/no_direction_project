@@ -3,96 +3,64 @@ This module contains action creators. They are functions which will return an ob
 These actions are imported by Redux-aware components who need them, in our case it is just Home.
 */
 
-import constants  from './constants';
+import constants from './constants';
 
-export default {
-    reset() {
-        // A normal action creator, returns a simple object describing the action.
-        return {
-            type: constants.RESET
-        };
-    },
-    duckDown(who) {
-        // here we take advantage of Redux-thunk; instead of returning an object describing an action,
-        // we return a function that takes dispatch and getState as arguments. This function can then
-        // invoke dispatch, now or later using setTimeout or similar.
+export default 
+{ 
+	setTimer(timerTime) {
+	    return {
+	        type: constants.TIMER_SET,
+	        timerTime:timerTime
+	    };
+   	},
+
+   	tickTimer() {
+   		return (dispatch, getState) => {
+   			dispatch({
+   				type:constants.TIMER_TICK,
+   				decrement:1000
+   			});
+   		};
+   			alert("Hello?");
+   	},
+
+
+   	startTimer() {
+   		return (dispatch, getState) => {
+   			dispatch({
+   				type:constants.TIMER_START
+   			});
+
+   		setTimeout(this.tickTimer(),1000);
+
+/*
+   			setTimeout(() => {
+                dispatch({
+                    type: constants.TIMER_TICK,
+                    decrement: 1000
+                });
+            },1000);
+   		};
+*/
+
+   		};
+   	},
+
+	stopTimer() {
+	    return {
+	        type: constants.TIMER_STOP
+	    };
+   	}
+
+};
+/*
+    setTimer(timerTime) {
         return (dispatch, getState) => {
+        	alert("D:"+dispatch+" \n State: "+getState+"\n timerTime:"+timerTime);
             dispatch({
-                type: constants.DUCK_DOWN,
-                coward: who
+                type: constants.TIMER_SET,
+                timerTime:timerTime
             });
-
-            setTimeout(() => {
-                dispatch({
-                    type: constants.STAND_UP,
-                    coward: who
-                });
-            },2000);
-        };
-    },
-    nuke(who, killable) {
-        return (dispatch, getState) => {
-            dispatch({
-                type: constants.TAKE_NUKE_STEP,
-                coward: who
-            });
-
-            setTimeout(() => {
-                dispatch({
-                    type: constants.TAKE_NUKE_STEP,
-                    coward: who
-                });
-
-                setTimeout(() => {
-                    dispatch({type: constants.TAKE_NUKE_STEP,
-                        coward: who
-                    });
-
-                    setTimeout(() => {
-                        dispatch({
-                            type: constants.TAKE_NUKE_STEP,
-                            coward: who,
-                            killable: killable
-                        });
-                    }, 5000);
-                }, 3000);
-            }, 4000);
-        };
-    },
-    aimAt(killer, victim) {
-        // Another async action using the Redux-thunk syntax
-        return (dispatch, getState) => {
-            dispatch({
-                type: constants.AIM_AT,
-                killer: killer,
-                victim: victim
-            });
-
-            setTimeout(() => {
-                dispatch({
-                    type: constants.KILL_HERO,
-                    killer: killer,
-                    victim: victim
-                });
-            },2000);
-        };
-    },
-    bombAt(killer, victim) {
-        // Another async action using the Redux-thunk syntax
-        return (dispatch,getState) => {
-            dispatch({
-                type: constants.BOMB_AT,
-                killer: killer,
-                victim: victim
-            });
-
-            setTimeout(() => {
-                dispatch({
-                    type: constants.END_BOMB,
-                    killer: killer,
-                    victim: victim
-                });
-            }, 2000);
         };
     }
-};
+*/
