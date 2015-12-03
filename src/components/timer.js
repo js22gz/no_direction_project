@@ -55,6 +55,10 @@ let mapDispatchToProps = (dispatch) => {
         },
         stopTimer() {
             dispatch(actions.stopTimer());
+        },
+
+        timerTick() {
+            dispatch(actions.timerTick());
         }
     };
 };

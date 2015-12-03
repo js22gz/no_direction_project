@@ -14,9 +14,14 @@ export default
 	    };
    	},
 
+   	/*
+	Som man ser här har vi ju lite issues för att tickTimer får ju ingen dispatch, getState... 
+	Så jag.. ja jag vet inte riktigt ;) 
+   	*/
+
    	tickTimer() {
    		return (dispatch, getState) => {
-   			alert("Här är den ju! \nDispatch: "+dispatch+"\nGetState:"+getState);
+   			alert("Här har vi problemet! \nDispatch: "+dispatch+"\nGetState:"+getState);
    			dispatch({
    				type:constants.TIMER_TICK,
    				decrement:1000
@@ -26,12 +31,12 @@ export default
 
 
    	startTimer() {
-   		return (dispatch, getState) => {
+   		return () => {
    			dispatch({
    				type:constants.TIMER_START
    			});
 
-   		setTimeout(this.tickTimer(),1000);
+   		setTimeout(this.tickTimer(dispatch,getState),1000);
    		};
    	},
 
