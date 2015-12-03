@@ -16,6 +16,7 @@ export default
 
    	tickTimer() {
    		return (dispatch, getState) => {
+   			alert("Här är den ju! \nDispatch: "+dispatch+"\nGetState:"+getState);
    			dispatch({
    				type:constants.TIMER_TICK,
    				decrement:1000

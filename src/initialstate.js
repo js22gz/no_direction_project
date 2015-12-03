@@ -12,8 +12,7 @@ export default () => {
         timer:
         {
         	timerTime:0,
-        	timerOn: false        	
-
+        	timerOn: false
         }
     };
 };
