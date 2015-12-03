@@ -3,38 +3,37 @@ import {connect} from 'react-redux';
 import actions from '../actions';
 
 
-class Timer extends React.Component 
-{
-    render() 
-    {
-        let tOn=this.props.timer.timerOn;
-       return(
-            <div>
-            <p>Tid: {this.props.timer.timerTime}</p>
-            <p>TimerOn: {tOn.toString()}</p>
-
-            {(this.props.timer.timerTime===0)
-                ?<form>
-                    <input type="number" id="minutes" name="minutes" min="1" max="60" defaultValue="1"/>
-                    <button type="button" onClick={this.props.setTimer}>Set timer</button>
-                </form>
-                :<h1>Timer: </h1>
-            }
-            {(this.props.timer.timerOn===false && this.props.timer.timerTime!=0)
-                ?<button type="button" onClick={this.props.startTimer}>Start</button>
-                :null
-            }
-            {(this.props.timer.timerOn===true && this.props.timer.timerTime!=0)
-                ?<button type="button" onClick={this.props.stopTimer}>Stop</button>
-                :null
-            }
-          </div>
-            );
-    }
+let Timer = (props)=> {
+    let tOn=props.timer.timerOn;
+    return <div>
+        <p>Tid: {props.timer.timerTime}</p>
+        <p>TimerOn: {tOn.toString()}</p>
+        {(props.timer.timerTime===0)
+            ?<form>
+                <input type="number" id="minutes" name="minutes" min="1" max="60" defaultValue="1"/>
+                <button type="button" onClick={props.setTimer}>Set timer</button>
+            </form>
+            :<h1>Timer: </h1>
+        }
+        {(props.timer.timerOn===false && props.timer.timerTime!=0)
+            ?<button type="button" onClick={props.startTimer}>Start</button>
+            :null
+        }
+        {(props.timer.timerOn===true && props.timer.timerTime!=0)
+            ?<button type="button" onClick={props.stopTimer}>Stop</button>
+            :null
+        }
+    </div>;
 }
 
 Timer.propTypes = {
-    timerTime:PropTypes.number.isRequired
+    timer: PropTypes.shape({
+        timerTime: PropTypes.number.isRequired,
+        timerOn: PropTypes.bool.isRequired
+    }),
+    startTimer: PropTypes.func.isRequired,
+    stopTimer: PropTypes.func.isRequired,
+    setTimer: PropTypes.func.isRequired
 };
 
 let mapStateToProps = (state) => {
@@ -46,8 +45,8 @@ let mapStateToProps = (state) => {
 let mapDispatchToProps = (dispatch) => {
     return {
         setTimer() { 
-            var minutes = document.getElementById("minutes");
-            var milliSeconds = minutes.value*60*1000;
+            let minutes = document.getElementById("minutes"),
+                milliSeconds = minutes.value*60*1000;
             dispatch(actions.setTimer(milliSeconds)); 
         },
         startTimer() {
@@ -55,10 +54,6 @@ let mapDispatchToProps = (dispatch) => {
         },
         stopTimer() {
             dispatch(actions.stopTimer());
-        },
-
-        timerTick() {
-            dispatch(actions.timerTick());
         }
     };
 };
