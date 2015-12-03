@@ -25681,7 +25681,6 @@
 	        timer: {
 	            timerTime: 0,
 	            timerOn: false
-
 	        }
 	    };
 	}; /*
@@ -25769,7 +25768,6 @@
 	            newstate.timerOn = false;
 	            return newstate;
 	        case _constants2.default.TIMER_TICK:
-	            alert("Here");
 	            newstate.timerTime -= action.decrement;
 	            return newstate;
 	        default:
@@ -26025,7 +26023,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _constants = __webpack_require__(230);
@@ -26035,48 +26033,37 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = {
-	  setTimer: function setTimer(timerTime) {
-	    return {
-	      type: _constants2.default.TIMER_SET,
-	      timerTime: timerTime
-	    };
-	  },
-	  tickTimer: function tickTimer() {
-	    return function (dispatch, getState) {
-	      dispatch({
-	        type: _constants2.default.TIMER_TICK,
-	        decrement: 1000
-	      });
-	    };
-	  },
-	  startTimer: function startTimer() {
-	    var _this = this;
-
-	    return function (dispatch, getState) {
-	      dispatch({
-	        type: _constants2.default.TIMER_START
-	      });
-
-	      setTimeout(_this.tickTimer(), 1000);
-	    };
-	  },
-	  stopTimer: function stopTimer() {
-	    return {
-	      type: _constants2.default.TIMER_STOP
-	    };
-	  }
-	}; /*
-	   This module contains action creators. They are functions which will return an object describing the actions.
-	   These actions are imported by Redux-aware components who need them, in our case it is just Home.
-	   */
+	    setTimer: function setTimer(timerTime) {
+	        return {
+	            type: _constants2.default.TIMER_SET,
+	            timerTime: timerTime
+	        };
+	    },
+	    startTimer: function startTimer() {
+	        return function (dispatch, getState) {
+	            var tick = function tick() {
+	                if (getState().timer.timerOn) {
+	                    dispatch({
+	                        type: _constants2.default.TIMER_TICK,
+	                        decrement: 1000
+	                    });
+	                    setTimeout(tick, 1000);
+	                }
+	            };
+	            dispatch({ type: _constants2.default.TIMER_START });
+	            tick();
+	        };
+	    },
+	    stopTimer: function stopTimer() {
+	        return { type: _constants2.default.TIMER_STOP };
+	    }
+	};
 
 /***/ },
 /* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -26094,73 +26081,58 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Timer = (function (_React$Component) {
-	    _inherits(Timer, _React$Component);
-
-	    function Timer() {
-	        _classCallCheck(this, Timer);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Timer).apply(this, arguments));
-	    }
-
-	    _createClass(Timer, [{
-	        key: 'render',
-	        value: function render() {
-	            var tOn = this.props.timer.timerOn;
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    'Tid: ',
-	                    this.props.timer.timerTime
-	                ),
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    'TimerOn: ',
-	                    tOn.toString()
-	                ),
-	                this.props.timer.timerTime === 0 ? _react2.default.createElement(
-	                    'form',
-	                    null,
-	                    _react2.default.createElement('input', { type: 'number', id: 'minutes', name: 'minutes', min: '1', max: '60', defaultValue: '1' }),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { type: 'button', onClick: this.props.setTimer },
-	                        'Set timer'
-	                    )
-	                ) : _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    'Timer: '
-	                ),
-	                this.props.timer.timerOn === false && this.props.timer.timerTime != 0 ? _react2.default.createElement(
-	                    'button',
-	                    { type: 'button', onClick: this.props.startTimer },
-	                    'Start'
-	                ) : null,
-	                this.props.timer.timerOn === true && this.props.timer.timerTime != 0 ? _react2.default.createElement(
-	                    'button',
-	                    { type: 'button', onClick: this.props.stopTimer },
-	                    'Stop'
-	                ) : null
-	            );
-	        }
-	    }]);
-
-	    return Timer;
-	})(_react2.default.Component);
+	var Timer = function Timer(props) {
+	    var tOn = props.timer.timerOn;
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'p',
+	            null,
+	            'Tid: ',
+	            props.timer.timerTime
+	        ),
+	        _react2.default.createElement(
+	            'p',
+	            null,
+	            'TimerOn: ',
+	            tOn.toString()
+	        ),
+	        props.timer.timerTime === 0 ? _react2.default.createElement(
+	            'form',
+	            null,
+	            _react2.default.createElement('input', { type: 'number', id: 'minutes', name: 'minutes', min: '1', max: '60', defaultValue: '1' }),
+	            _react2.default.createElement(
+	                'button',
+	                { type: 'button', onClick: props.setTimer },
+	                'Set timer'
+	            )
+	        ) : _react2.default.createElement(
+	            'h1',
+	            null,
+	            'Timer: '
+	        ),
+	        props.timer.timerOn === false && props.timer.timerTime != 0 ? _react2.default.createElement(
+	            'button',
+	            { type: 'button', onClick: props.startTimer },
+	            'Start'
+	        ) : null,
+	        props.timer.timerOn === true && props.timer.timerTime != 0 ? _react2.default.createElement(
+	            'button',
+	            { type: 'button', onClick: props.stopTimer },
+	            'Stop'
+	        ) : null
+	    );
+	};
 
 	Timer.propTypes = {
-	    timerTime: _react.PropTypes.number.isRequired
+	    timer: _react.PropTypes.shape({
+	        timerTime: _react.PropTypes.number.isRequired,
+	        timerOn: _react.PropTypes.bool.isRequired
+	    }),
+	    startTimer: _react.PropTypes.func.isRequired,
+	    stopTimer: _react.PropTypes.func.isRequired,
+	    setTimer: _react.PropTypes.func.isRequired
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {
@@ -26172,8 +26144,8 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	    return {
 	        setTimer: function setTimer() {
-	            var minutes = document.getElementById("minutes");
-	            var milliSeconds = minutes.value * 60 * 1000;
+	            var minutes = document.getElementById("minutes"),
+	                milliSeconds = minutes.value * 60 * 1000;
 	            dispatch(_actions2.default.setTimer(milliSeconds));
 	        },
 	        startTimer: function startTimer() {
