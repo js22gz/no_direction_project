@@ -60,7 +60,7 @@
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _routes = __webpack_require__(233);
+	var _routes = __webpack_require__(234);
 
 	var _routes2 = _interopRequireDefault(_routes);
 
@@ -25647,17 +25647,22 @@
 
 	var _timer2 = _interopRequireDefault(_timer);
 
+	var _stopwatch = __webpack_require__(233);
+
+	var _stopwatch2 = _interopRequireDefault(_stopwatch);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/*
-	This file defines the main Redux Store. It will be required by all 'smart' components in the app,
-	in our case Home and Hero.
-	*/
+	// allows us to use asynchronous actions
 
 	var rootReducer = (0, _redux.combineReducers)({
-		timer: _timer2.default }); // allows us to use asynchronous actions
+		timer: _timer2.default,
+		stopwatch: _stopwatch2.default
+	}); /*
+	    This file defines the main Redux Store. It will be required by all 'smart' components in the app,
+	    in our case Home and Hero.
+	    */
 
-	// this means heroReducer will operate on appState.heroes
 	exports.default = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore)(rootReducer, (0, _initialstate2.default)());
 
 /***/ },
@@ -25681,6 +25686,10 @@
 	        timer: {
 	            timerTime: 0,
 	            timerOn: false
+	        },
+	        stopwatch: {
+	            stopwatchTime: 0,
+	            stopwatchOn: false
 	        }
 	    };
 	}; /*
@@ -25705,10 +25714,18 @@
 
 	var C = {
 	    // ACTION TYPES
+
+	    //TIMER
 	    TIMER_SET: 'TIMER_SET',
 	    TIMER_START: 'TIMER_START',
 	    TIMER_STOP: 'TIMER_STOP',
-	    TIMER_TICK: 'TIMER_TICK'
+	    TIMER_TICK: 'TIMER_TICK',
+
+	    //STOPWATCH
+	    STOPWATCH_RESET: 'STOPWATCH_RESET',
+	    STOPWATCH_START: 'STOPWATCH_START',
+	    STOPWATCH_STOP: 'STOPWATCH_STOP',
+	    STOPWATCH_TICK: 'STOPWATCH_TICK'
 	};
 
 	exports.default = C;
@@ -25782,6 +25799,48 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _constants = __webpack_require__(230);
+
+	var _constants2 = _interopRequireDefault(_constants);
+
+	var _initialstate = __webpack_require__(229);
+
+	var _initialstate2 = _interopRequireDefault(_initialstate);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function (state, action) {
+	    var newstate = Object.assign({}, state); // sloppily copying the old state here, so we never mutate it
+	    switch (action.type) {
+	        case _constants2.default.STOPWATCH_RESET:
+	            newstate.stopwatchTime = 0;
+	            newstate.stopwatchOn = false;
+	            return newstate;
+	        case _constants2.default.STOPWATCH_START:
+	            newstate.stopwatchOn = true;
+	            return newstate;
+	        case _constants2.default.STOPWATCH_STOP:
+	            newstate.stopwatchOn = false;
+	            return newstate;
+	        case _constants2.default.STOPWATCH_TICK:
+	            newstate.stopwatchTime += action.increment;
+	            return newstate;
+
+	        default:
+	            return state || (0, _initialstate2.default)().stopwatch;
+	    }
+	};
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
@@ -25791,32 +25850,39 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var _wrapper = __webpack_require__(234);
+	var _wrapper = __webpack_require__(235);
 
-	var _home = __webpack_require__(236);
+	var _home = __webpack_require__(238);
 
 	var _home2 = _interopRequireDefault(_home);
 
-	var _timer = __webpack_require__(238);
+	var _timer = __webpack_require__(240);
 
 	var _timer2 = _interopRequireDefault(_timer);
 
+	var _stopwatch = __webpack_require__(241);
+
+	var _stopwatch2 = _interopRequireDefault(_stopwatch);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/*
+	This is the "sitemap" of our app!
+	*/
 
 	exports.default = _react2.default.createElement(
 	  _reactRouter.Route,
 	  { component: _wrapper.Wrapper, path: '/' },
 	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _home2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/timer', component: _timer2.default })
-	); /*
-	   This is the "sitemap" of our app!
-	   */
+	  _react2.default.createElement(_reactRouter.Route, { path: '/timer', component: _timer2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: '/stopwatch', component: _stopwatch2.default })
+	);
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -25829,9 +25895,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _nav = __webpack_require__(235);
+	var _nav = __webpack_require__(236);
 
 	var _nav2 = _interopRequireDefault(_nav);
+
+	var _timeheader = __webpack_require__(237);
+
+	var _timeheader2 = _interopRequireDefault(_timeheader);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25854,17 +25924,13 @@
 	    }
 
 	    _createClass(Wrapper, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "wrapper" },
+	                'div',
+	                { className: 'wrapper' },
+	                _react2.default.createElement(_timeheader2.default, null),
 	                _react2.default.createElement(_nav2.default, null),
-	                _react2.default.createElement(
-	                    "h2",
-	                    null,
-	                    "No direction project"
-	                ),
 	                this.props.children
 	            );
 	        }
@@ -25874,7 +25940,7 @@
 	})(_react2.default.Component);
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25939,6 +26005,15 @@
 	                            { to: "/timer" },
 	                            "Timer"
 	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "li",
+	                        { style: liStyle },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: "/stopwatch" },
+	                            "Stopwatch"
+	                        )
 	                    )
 	                ),
 	                _react2.default.createElement("div", { className: "clear" })
@@ -25952,12 +26027,10 @@
 	exports.default = Nav;
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -25969,55 +26042,116 @@
 
 	var _reactRedux = __webpack_require__(210);
 
-	var _actions = __webpack_require__(237);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var inlineStyle = {
+	    display: "inline",
+	    margin: '1em'
+	};
+
+	var TimeHeader = function TimeHeader(props) {
+	    var swTime = props.stopwatch.stopwatchTime,
+	        swOn = props.stopwatch.stopwatchOn,
+	        tOn = props.timer.timerOn,
+	        tTime = props.timer.timerTime;
+
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'h1',
+	            { style: inlineStyle },
+	            'No direction project'
+	        ),
+	        swOn || swTime > 0 ? _react2.default.createElement(
+	            'h2',
+	            { style: inlineStyle },
+	            'Stopwatch: ',
+	            swTime
+	        ) : null,
+	        tOn || tTime > 0 ? _react2.default.createElement(
+	            'h2',
+	            { style: inlineStyle },
+	            'Timer: ',
+	            tTime
+	        ) : null
+	    );
+	};
+
+	TimeHeader.propTypes = {
+	    stopwatch: _react.PropTypes.shape({
+	        stopwatchTime: _react.PropTypes.number.isRequired,
+	        stopwatchOn: _react.PropTypes.bool.isRequired
+	    }),
+	    timer: _react.PropTypes.shape({
+	        timerTime: _react.PropTypes.number.isRequired,
+	        timerOn: _react.PropTypes.bool.isRequired
+	    })
+
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        timer: state.timer,
+	        stopwatch: state.stopwatch
+	    };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(TimeHeader);
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(210);
+
+	var _actions = __webpack_require__(239);
 
 	var _actions2 = _interopRequireDefault(_actions);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var Home = function Home(props) {
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        'This is home'
+	    );
+	};
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	Home.propTypes = {
+	    stopwatch: _react.PropTypes.shape({
+	        stopwatchTime: _react.PropTypes.number.isRequired,
+	        stopwatchOn: _react.PropTypes.bool.isRequired
+	    }),
+	    timer: _react.PropTypes.shape({
+	        timerTime: _react.PropTypes.number.isRequired,
+	        timerOn: _react.PropTypes.bool.isRequired
+	    })
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Home = (function (_React$Component) {
-	    _inherits(Home, _React$Component);
-
-	    function Home() {
-	        _classCallCheck(this, Home);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Home).apply(this, arguments));
-	    }
-
-	    _createClass(Home, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                'This is home'
-	            );
-	        }
-	    }]);
-
-	    return Home;
-	})(_react2.default.Component);
-
-	Home.propTypes = {};
+	};
 
 	var mapStateToProps = function mapStateToProps(state) {
-	    return {};
+	    return {
+	        timer: state.timer,
+	        stopwatch: state.stopwatch
+	    };
 	};
 
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	    return {};
-	};
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Home);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Home);
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26042,25 +26176,48 @@
 	    startTimer: function startTimer() {
 	        return function (dispatch, getState) {
 	            var tick = function tick() {
-	                if (getState().timer.timerOn) {
+	                if (getState().timer.timerOn && getState().timer.timerTime > 0) {
 	                    dispatch({
 	                        type: _constants2.default.TIMER_TICK,
 	                        decrement: 1000
 	                    });
 	                    setTimeout(tick, 1000);
+	                } else {
+	                    dispatch({ type: _constants2.default.TIMER_STOP });
 	                }
 	            };
 	            dispatch({ type: _constants2.default.TIMER_START });
-	            tick();
+	            setTimeout(tick, 1000);
 	        };
 	    },
 	    stopTimer: function stopTimer() {
 	        return { type: _constants2.default.TIMER_STOP };
+	    },
+	    resetStopwatch: function resetStopwatch() {
+	        return { type: _constants2.default.STOPWATCH_RESET };
+	    },
+	    startStopwatch: function startStopwatch() {
+	        return function (dispatch, getState) {
+	            var tick = function tick() {
+	                if (getState().stopwatch.stopwatchOn) {
+	                    dispatch({
+	                        type: _constants2.default.STOPWATCH_TICK,
+	                        increment: 1000
+	                    });
+	                    setTimeout(tick, 1000);
+	                }
+	            };
+	            dispatch({ type: _constants2.default.STOPWATCH_START });
+	            setTimeout(tick, 1000);
+	        };
+	    },
+	    stopStopwatch: function stopStopwatch() {
+	        return { type: _constants2.default.STOPWATCH_STOP };
 	    }
 	};
 
 /***/ },
-/* 238 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26075,43 +26232,53 @@
 
 	var _reactRedux = __webpack_require__(210);
 
-	var _actions = __webpack_require__(237);
+	var _actions = __webpack_require__(239);
 
 	var _actions2 = _interopRequireDefault(_actions);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Timer = function Timer(props) {
-	    var tOn = props.timer.timerOn;
+
+	    var divStyle = {
+	        backgroundColor: 'silver'
+	    },
+	        buttonStyle = {
+	        width: 100,
+	        height: 100,
+	        borderRadius: '50%',
+	        border: '10px solid #cfdcec'
+	    },
+	        getMinutes = function getMinutes() {
+	        return Math.floor(props.timer.timerTime / 1000 / 60);
+	    },
+	        getSeconds = function getSeconds() {
+	        return ('0' + props.timer.timerTime / 1000 % 60).slice(-2);
+	    };
 	    return _react2.default.createElement(
 	        'div',
-	        null,
-	        _react2.default.createElement(
+	        { style: divStyle },
+	        props.timer.timerTime === 0 && props.timer.timerOn === false ? null : _react2.default.createElement(
 	            'p',
 	            null,
-	            'Tid: ',
-	            props.timer.timerTime
-	        ),
-	        _react2.default.createElement(
-	            'p',
-	            null,
-	            'TimerOn: ',
-	            tOn.toString()
+	            'Time: ',
+	            getMinutes(),
+	            ':',
+	            getSeconds()
 	        ),
 	        props.timer.timerTime === 0 ? _react2.default.createElement(
 	            'form',
 	            null,
-	            _react2.default.createElement('input', { type: 'number', id: 'minutes', name: 'minutes', min: '1', max: '60', defaultValue: '1' }),
+	            _react2.default.createElement('input', { type: 'number', id: 'hours', name: 'hours', min: '0', max: '24', defaultValue: '0' }),
+	            _react2.default.createElement('input', { type: 'number', id: 'minutes', name: 'minutes', min: '0', max: '59', defaultValue: '0' }),
+	            _react2.default.createElement('input', { type: 'number', id: 'seconds', name: 'seconds', min: '0', max: '59', defaultValue: '0' }),
+	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(
 	                'button',
-	                { type: 'button', onClick: props.setTimer },
+	                { type: 'button', style: buttonStyle, onClick: props.setTimer },
 	                'Set timer'
 	            )
-	        ) : _react2.default.createElement(
-	            'h1',
-	            null,
-	            'Timer: '
-	        ),
+	        ) : null,
 	        props.timer.timerOn === false && props.timer.timerTime != 0 ? _react2.default.createElement(
 	            'button',
 	            { type: 'button', onClick: props.startTimer },
@@ -26158,6 +26325,101 @@
 	};
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Timer);
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(210);
+
+	var _actions = __webpack_require__(239);
+
+	var _actions2 = _interopRequireDefault(_actions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Stopwatch = function Stopwatch(props) {
+	    var swOn = props.stopwatch.stopwatchOn;
+	    var swTime = props.stopwatch.stopwatchTime;
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'p',
+	            null,
+	            'On: ',
+	            swOn.toString()
+	        ),
+	        _react2.default.createElement(
+	            'p',
+	            null,
+	            'Time:',
+	            swTime
+	        ),
+	        !swOn ? _react2.default.createElement(
+	            'button',
+	            { onClick: props.startStopwatch },
+	            'Start'
+	        ) : _react2.default.createElement(
+	            'button',
+	            { onClick: props.stopStopwatch },
+	            'Stop'
+	        ),
+	        !swOn && swTime > 0 ? _react2.default.createElement(
+	            'button',
+	            { onClick: props.resetStopwatch },
+	            'Reset'
+	        ) : null
+	    );
+	}; /*
+	   Stopwatch
+	   
+	    start
+	    stop
+	    reset
+	   */
+
+	Stopwatch.propTypes = {
+	    stopwatch: _react.PropTypes.shape({
+	        stopwatchTime: _react.PropTypes.number.isRequired,
+	        stopwatchOn: _react.PropTypes.bool.isRequired
+	    }),
+	    stopwatchStart: _react.PropTypes.func.isRequired,
+	    stopwatchStop: _react.PropTypes.func.isRequired,
+	    stopwatchReset: _react.PropTypes.func.isRequired
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        stopwatch: state.stopwatch
+	    };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	    return {
+	        startStopwatch: function startStopwatch() {
+	            dispatch(_actions2.default.startStopwatch());
+	        },
+	        stopStopwatch: function stopStopwatch() {
+	            dispatch(_actions2.default.stopStopwatch());
+	        },
+	        resetStopwatch: function resetStopwatch() {
+	            dispatch(_actions2.default.resetStopwatch());
+	        }
+	    };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Stopwatch);
 
 /***/ }
 /******/ ]);
