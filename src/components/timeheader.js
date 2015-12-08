@@ -26,16 +26,6 @@ let TimeHeader =(props)=>
             </div>
 }
 
-/*
-     let swOn = this.props.stopwatch.stopwatchOn
-    let swTime = this.props.stopwatch.stopwatchTime
-
-
-                {(swOn===true)
-                    ?<p>{swTime}</p>
-                    :null
-                }
-*/
 
 TimeHeader.propTypes = {
     stopwatch: PropTypes.shape({
