@@ -2,29 +2,30 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import actions from '../actions';
 
-class Home extends React.Component {
-    render() {
-        return (
-            <div>
+let Home = (props)=>{
+        return <div>
                 This is home
-            </div>
-        );
-    }
+            </div>;
 }
 
 Home.propTypes = {
+    stopwatch: PropTypes.shape({
+        stopwatchTime: PropTypes.number.isRequired,
+        stopwatchOn: PropTypes.bool.isRequired
+    }),
+    timer: PropTypes.shape({
+        timerTime: PropTypes.number.isRequired,
+        timerOn: PropTypes.bool.isRequired
+    }),
 
 };
 
 
 let mapStateToProps = (state) => {
-    return {
+    return { 
+        timer:state.timer,
+        stopwatch:state.stopwatch
     };
 };
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);

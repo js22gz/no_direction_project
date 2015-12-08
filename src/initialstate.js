@@ -13,6 +13,11 @@ export default () => {
         {
         	timerTime:0,
         	timerOn: false
+        },
+        stopwatch:
+        {
+        	stopwatchTime:0,
+        	stopwatchOn:false
         }
     };
 };

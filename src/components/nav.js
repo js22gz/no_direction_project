@@ -14,6 +14,7 @@ class Nav extends React.Component {
                 <ul>
                     <li style={liStyle}><Link to="/">Home</Link></li>
                     <li style={liStyle}><Link to="/timer">Timer</Link></li>
+                    <li style={liStyle}><Link to="/stopwatch">Stopwatch</Link></li>
                 </ul>
                 <div className="clear"/>
             </div>

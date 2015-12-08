@@ -7,11 +7,12 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import initialState from './initialstate';
 import thunk from 'redux-thunk'; // allows us to use asynchronous actions
 import timerReducer from './reducers/timer';
-
+import stopwatchReducer from './reducers/stopwatch';
 
 
 let rootReducer = combineReducers({
-	timer: timerReducer,   // this means heroReducer will operate on appState.heroes
+	timer: timerReducer,  
+	stopwatch: stopwatchReducer
 });
 
 export default applyMiddleware(thunk)(createStore)(rootReducer,initialState());
