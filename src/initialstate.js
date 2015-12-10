@@ -9,13 +9,14 @@ import C  from './constants';
 
 export default () => {
     return {
-        timer:
-        {
+        time: {
+            realTime: null
+        },
+        timer: {
         	timerTime:0,
         	timerOn: false
         },
-        stopwatch:
-        {
+        stopwatch: {
         	stopwatchTime:0,
         	stopwatchOn:false
         }

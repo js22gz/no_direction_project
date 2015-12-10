@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import convertTime from '../utils'
 
 let inlineStyle = { 
                     display:"inline", 
@@ -36,7 +37,7 @@ TimeHeader.propTypes = {
         timerTime: PropTypes.number.isRequired,
         timerOn: PropTypes.bool.isRequired
     }),
-
+    getSeconds: PropTypes.number.isRequired
 }
 
 

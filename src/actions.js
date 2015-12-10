@@ -2,6 +2,28 @@ import constants from './constants';
 
 export default { 
 
+    /**************
+        TIME
+    **************/
+
+    startTime() {
+        return (dispatch,getState) => {
+            let newTime = ()=> {
+                let time = new Date();
+                    dispatch({
+                        type: constants.TIME_SET,
+                        realTime: time
+                    });
+                    setTimeout(newTime,1000);
+            };
+            newTime();
+       };
+    },
+
+    /**************
+        TIMER
+    ***************/
+
     setTimer(timerTime) {
         return {
             type: constants.TIMER_SET,
@@ -31,6 +53,11 @@ export default {
     stopTimer() {
         return { type: constants.TIMER_STOP };
     },
+
+    /**************
+        STOPWATCH
+    **************/
+
 
     resetStopwatch() {
     	return { type: constants.STOPWATCH_RESET};

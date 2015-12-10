@@ -14,9 +14,12 @@ let Stopwatch = (props) =>
 {
 	let swOn = props.stopwatch.stopwatchOn
 	let swTime =  props.stopwatch.stopwatchTime
+	let getMinutes = Math.floor((swTime/1000)/60)
+	let getSeconds = ('0'+swTime/1000%60).slice(-2)
+
 	return 	<div> 
 				<p>On: {swOn.toString()}</p>
-				<p>Time:{swTime}</p>
+				<p>Time:{getMinutes}:{getSeconds}</p>
 				{(!swOn)
 					?<button onClick={props.startStopwatch}>Start</button>
 					:<button onClick={props.stopStopwatch}>Stop</button>

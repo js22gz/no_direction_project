@@ -3,7 +3,8 @@ This file contains all constants in the app.
 */
 
 const C = {
-    // ACTION TYPES
+    // TIME
+    TIME_SET: 'TIME_SET',
 
     //TIMER
     TIMER_SET: 'TIMER_SET',

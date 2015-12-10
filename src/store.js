@@ -8,9 +8,11 @@ import initialState from './initialstate';
 import thunk from 'redux-thunk'; // allows us to use asynchronous actions
 import timerReducer from './reducers/timer';
 import stopwatchReducer from './reducers/stopwatch';
+import timeReducer from './reducers/time';
 
 
 let rootReducer = combineReducers({
+	time: timeReducer,
 	timer: timerReducer,  
 	stopwatch: stopwatchReducer
 });

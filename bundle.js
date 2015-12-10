@@ -60,22 +60,28 @@
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _routes = __webpack_require__(234);
+	var _routes = __webpack_require__(235);
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _actions = __webpack_require__(241);
 
-	/*
-	This is the entry point for the app! From here we merely import our routes definitions,
-	then use React and React-DOM to render it.
-	*/
+	var _actions2 = _interopRequireDefault(_actions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	(0, _reactDom.render)(_react2.default.createElement(
 		_reactRedux.Provider,
 		{ store: _store2.default },
 		_react2.default.createElement(_reactRouter.Router, { routes: _routes2.default })
-	), document.getElementById('root'));
+	), document.getElementById('root')); /*
+	                                     This is the entry point for the app! From here we merely import our routes definitions,
+	                                     then use React and React-DOM to render it.
+	                                     */
+
+	setTimeout(function () {
+		_store2.default.dispatch(_actions2.default.startTime());
+	});
 
 /***/ },
 /* 1 */
@@ -25651,17 +25657,22 @@
 
 	var _stopwatch2 = _interopRequireDefault(_stopwatch);
 
+	var _time = __webpack_require__(234);
+
+	var _time2 = _interopRequireDefault(_time);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// allows us to use asynchronous actions
+	/*
+	This file defines the main Redux Store. It will be required by all 'smart' components in the app,
+	in our case Home and Hero.
+	*/
 
 	var rootReducer = (0, _redux.combineReducers)({
+		time: _time2.default,
 		timer: _timer2.default,
 		stopwatch: _stopwatch2.default
-	}); /*
-	    This file defines the main Redux Store. It will be required by all 'smart' components in the app,
-	    in our case Home and Hero.
-	    */
+	}); // allows us to use asynchronous actions
 
 	exports.default = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore)(rootReducer, (0, _initialstate2.default)());
 
@@ -25683,6 +25694,9 @@
 
 	exports.default = function () {
 	    return {
+	        time: {
+	            realTime: null
+	        },
 	        timer: {
 	            timerTime: 0,
 	            timerOn: false
@@ -25713,7 +25727,8 @@
 	*/
 
 	var C = {
-	    // ACTION TYPES
+	    // TIME
+	    TIME_SET: 'TIME_SET',
 
 	    //TIMER
 	    TIMER_SET: 'TIMER_SET',
@@ -25841,6 +25856,38 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _constants = __webpack_require__(230);
+
+	var _constants2 = _interopRequireDefault(_constants);
+
+	var _initialstate = __webpack_require__(229);
+
+	var _initialstate2 = _interopRequireDefault(_initialstate);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function (state, action) {
+	    var newstate = Object.assign({}, state); // sloppily copying the old state here, so we never mutate it
+	    switch (action.type) {
+	        case _constants2.default.TIME_SET:
+	            newstate.realTime = action.realTime;
+	            return newstate;
+
+	        default:
+	            return state || (0, _initialstate2.default)().time;
+	    }
+	};
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
@@ -25850,17 +25897,17 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var _wrapper = __webpack_require__(235);
+	var _wrapper = __webpack_require__(236);
 
-	var _home = __webpack_require__(238);
+	var _home = __webpack_require__(240);
 
 	var _home2 = _interopRequireDefault(_home);
 
-	var _timer = __webpack_require__(240);
+	var _timer = __webpack_require__(242);
 
 	var _timer2 = _interopRequireDefault(_timer);
 
-	var _stopwatch = __webpack_require__(241);
+	var _stopwatch = __webpack_require__(243);
 
 	var _stopwatch2 = _interopRequireDefault(_stopwatch);
 
@@ -25879,7 +25926,7 @@
 	);
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25895,11 +25942,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _nav = __webpack_require__(236);
+	var _nav = __webpack_require__(237);
 
 	var _nav2 = _interopRequireDefault(_nav);
 
-	var _timeheader = __webpack_require__(237);
+	var _timeheader = __webpack_require__(238);
 
 	var _timeheader2 = _interopRequireDefault(_timeheader);
 
@@ -25940,7 +25987,7 @@
 	})(_react2.default.Component);
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26027,7 +26074,7 @@
 	exports.default = Nav;
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26041,6 +26088,10 @@
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactRedux = __webpack_require__(210);
+
+	var _utils = __webpack_require__(239);
+
+	var _utils2 = _interopRequireDefault(_utils);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26086,8 +26137,8 @@
 	    timer: _react.PropTypes.shape({
 	        timerTime: _react.PropTypes.number.isRequired,
 	        timerOn: _react.PropTypes.bool.isRequired
-	    })
-
+	    }),
+	    getSeconds: _react.PropTypes.number.isRequired
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {
@@ -26100,7 +26151,35 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(TimeHeader);
 
 /***/ },
-/* 238 */
+/* 239 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = convertTime;
+	/*utils.js*/
+	/*
+	var getMinutes = ()=> {
+		return Math.floor((props.timer.timerTime/1000)/60)
+		}
+
+	let getSeconds = (time)=> {
+		return('0' + (time/1000)%60).slice(-2);
+	    }
+		*/
+
+	function convertTime(time) {
+		alert("Made it here!");
+		var minutes = Math.floor(props.timer.timerTime / 1000 / 60);
+		seconds = ('0' + time / 1000 % 60).slice(-2);
+		return minutes + ':' + seconds;
+	}
+
+/***/ },
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26115,21 +26194,38 @@
 
 	var _reactRedux = __webpack_require__(210);
 
-	var _actions = __webpack_require__(239);
+	var _actions = __webpack_require__(241);
 
 	var _actions2 = _interopRequireDefault(_actions);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Home = function Home(props) {
+
 	    return _react2.default.createElement(
 	        'div',
 	        null,
-	        'This is home'
+	        'This is home',
+	        props.time.realTime != null ? _react2.default.createElement(
+	            'h3',
+	            null,
+	            'Time: ',
+	            props.time.realTime
+	        ) : null,
+	        _react2.default.createElement(
+	            'h1',
+	            null,
+	            'Time:',
+	            props.time.realTime
+	        )
 	    );
 	};
 
 	Home.propTypes = {
+	    time: _react.PropTypes.shape({
+	        realTime: _react.PropTypes.object.isRequired
+	    }),
+
 	    stopwatch: _react.PropTypes.shape({
 	        stopwatchTime: _react.PropTypes.number.isRequired,
 	        stopwatchOn: _react.PropTypes.bool.isRequired
@@ -26143,6 +26239,7 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	    return {
+	        time: state.time,
 	        timer: state.timer,
 	        stopwatch: state.stopwatch
 	    };
@@ -26151,7 +26248,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Home);
 
 /***/ },
-/* 239 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26167,6 +26264,29 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = {
+
+	    /**************
+	        TIME
+	    **************/
+
+	    startTime: function startTime() {
+	        return function (dispatch, getState) {
+	            var newTime = function newTime() {
+	                var time = new Date();
+	                dispatch({
+	                    type: _constants2.default.TIME_SET,
+	                    realTime: time
+	                });
+	                setTimeout(newTime, 1000);
+	            };
+	            newTime();
+	        };
+	    },
+
+	    /**************
+	        TIMER
+	    ***************/
+
 	    setTimer: function setTimer(timerTime) {
 	        return {
 	            type: _constants2.default.TIMER_SET,
@@ -26193,6 +26313,11 @@
 	    stopTimer: function stopTimer() {
 	        return { type: _constants2.default.TIMER_STOP };
 	    },
+
+	    /**************
+	        STOPWATCH
+	    **************/
+
 	    resetStopwatch: function resetStopwatch() {
 	        return { type: _constants2.default.STOPWATCH_RESET };
 	    },
@@ -26217,7 +26342,7 @@
 	};
 
 /***/ },
-/* 240 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26232,7 +26357,7 @@
 
 	var _reactRedux = __webpack_require__(210);
 
-	var _actions = __webpack_require__(239);
+	var _actions = __webpack_require__(241);
 
 	var _actions2 = _interopRequireDefault(_actions);
 
@@ -26327,7 +26452,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Timer);
 
 /***/ },
-/* 241 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26342,7 +26467,7 @@
 
 	var _reactRedux = __webpack_require__(210);
 
-	var _actions = __webpack_require__(239);
+	var _actions = __webpack_require__(241);
 
 	var _actions2 = _interopRequireDefault(_actions);
 
@@ -26351,6 +26476,9 @@
 	var Stopwatch = function Stopwatch(props) {
 	    var swOn = props.stopwatch.stopwatchOn;
 	    var swTime = props.stopwatch.stopwatchTime;
+	    var getMinutes = Math.floor(swTime / 1000 / 60);
+	    var getSeconds = ('0' + swTime / 1000 % 60).slice(-2);
+
 	    return _react2.default.createElement(
 	        'div',
 	        null,
@@ -26364,7 +26492,9 @@
 	            'p',
 	            null,
 	            'Time:',
-	            swTime
+	            getMinutes,
+	            ':',
+	            getSeconds
 	        ),
 	        !swOn ? _react2.default.createElement(
 	            'button',

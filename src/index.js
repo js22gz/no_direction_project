@@ -9,6 +9,7 @@ import {Router} from 'react-router';
 import {Provider} from 'react-redux';
 import store from './store';
 import routes from './routes';
+import actions from './actions';
 
 render(
 	<Provider store={store}>
@@ -16,3 +17,7 @@ render(
 	</Provider>,
 	document.getElementById('root')
 );
+
+setTimeout(function(){
+	store.dispatch(actions.startTime());
+});
