@@ -18,6 +18,8 @@ render(
 	document.getElementById('root')
 );
 
+
 setTimeout(function(){
 	store.dispatch(actions.startTime());
 });
+

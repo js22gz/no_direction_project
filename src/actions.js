@@ -1,4 +1,5 @@
 import constants from './constants';
+import moment from 'moment';
 
 export default { 
 
@@ -9,12 +10,13 @@ export default {
     startTime() {
         return (dispatch,getState) => {
             let newTime = ()=> {
-                let time = new Date();
-                    dispatch({
-                        type: constants.TIME_SET,
-                        realTime: time
-                    });
-                    setTimeout(newTime,1000);
+                let time = moment();
+
+                dispatch({
+                    type: constants.TIME_SET,
+                    realTime: time
+                });
+                setTimeout(newTime,1000);
             };
             newTime();
        };

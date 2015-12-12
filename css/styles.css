@@ -1,33 +1,14 @@
-.battler {
-	float: left;
-	width: 125px;
-	height: 100%;
-	margin: 0.5em;
-	border: 1px solid black;
-	padding: 0.5em;
+.dcTable {
+	background-color:grey;
+	padding:1em;
 }
 
-.battlers:after {
-    content: "";
-    display: block;
-    clear: both;
+.dcTableHead{
+	color:yellow;
+	font-size:1em;
 }
 
-.battler button {
-	width: 120px;
-	text-align: left;
-}
-
-.battler  a {
-	text-decoration: none;
-	text-transform: capitalize;
-}
-
-.btn-grp {
-	margin-bottom: 5px;
-}
-
-.nuke {
-	display: block;
-	margin: auto;
+.dcTableData {
+	color:black;
+	font-size:3em;
 }

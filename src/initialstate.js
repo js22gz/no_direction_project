@@ -13,12 +13,12 @@ export default () => {
             realTime: null
         },
         timer: {
-        	timerTime:0,
+        	timerTime: 0,
         	timerOn: false
         },
         stopwatch: {
-        	stopwatchTime:0,
-        	stopwatchOn:false
+        	stopwatchTime: 0,
+        	stopwatchOn: false
         }
     };
 };

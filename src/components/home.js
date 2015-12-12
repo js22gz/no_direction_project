@@ -1,16 +1,18 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import actions from '../actions';
+import DigitalClock from './clocks/digitalClock';
 
 let Home = (props)=>{
 
+        let date = props.time.realTime;
+        let show = ()=> {
+            alert(date.seconds());
+        }
+
         return <div>
                 This is home
-                {(props.time.realTime!=null)
-                    ?<h3>Time: {props.time.realTime}</h3>
-                    :null
-                }
-                <h1>Time:{props.time.realTime}</h1>
+                <DigitalClock/>
             </div>;
 }
 
