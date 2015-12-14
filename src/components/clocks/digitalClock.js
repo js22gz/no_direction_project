@@ -5,20 +5,48 @@ import {connect} from 'react-redux';
 
 
 let DigitalClock = (props)=>{
+    let seconds = ()=> {
+      let sec = props.time.realTime.seconds();
+      if(sec<10) {
+        return '0' + sec;
+      }
+      else {
+        return sec;
+      }
+    }
+    let minutes = ()=> {
+      let min = props.time.realTime.minutes();
+      if(min<10) {
+        return '0' + min;
+      }
+      else {
+        return min;
+      }
+    }
+
+    let hours = ()=> {
+      let hour = props.time.realTime.hours();
+      if(hour<10) {
+        return '0' + hour;
+      }
+      else {
+        return hour;
+      }
+    }
+
         return <div>
-                <h1>Digital Clock</h1>
                 {(props.time.realTime!=null)
-                ?<table class='dcTable'>
+                ?<table className='dcTable'>
 
                 	<tr>
-               			<th class='dcTableHead'>Hour</th>
-               			<th class='dcTableHead'>Minute</th>
-               			<th class='dcTableHead'>Second</th>
+               			<th className='dcTableHead'>Timme</th>
+               			<th className='dcTableHead'>Minut</th>
+               			<th className='dcTableHead'>Sekund</th>
                 	</tr>
                 	<tr>
-               			<td class='dcTableData'>{props.time.realTime.hours()}</td>
-               			<td class='dcTableData'>{props.time.realTime.minutes()}</td>
-               			<td class='dcTableData'>{props.time.realTime.seconds()}</td>
+               			<td className='dcTableData'>{hours()}</td>
+               			<td className='dcTableData'>:{minutes()}</td>
+               			<td className='dcTableData'>:{seconds()}</td>
                 	</tr>
 
                 </table>

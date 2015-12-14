@@ -2,17 +2,14 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import actions from '../actions';
 import DigitalClock from './clocks/digitalClock';
+import TextClock from './clocks/textClock';
 
 let Home = (props)=>{
-
-        let date = props.time.realTime;
-        let show = ()=> {
-            alert(date.seconds());
-        }
 
         return <div>
                 This is home
                 <DigitalClock/>
+                <TextClock/>
             </div>;
 }
 

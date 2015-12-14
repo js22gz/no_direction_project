@@ -26206,16 +26206,38 @@
 
 	var Home = function Home(props) {
 
+	    var textTime = function textTime() {
+	        //hours
+	        var timeMap = new Map();
+	        timeMap.set(1, "ett");
+	        timeMap.set(2, "två");
+	        timeMap.set(3, "tre");
+	        timeMap.set(4, "fyra");
+	        timeMap.set(5, "fem");
+	        timeMap.set(6, "sex");
+	        timeMap.set(7, "sju");
+	        timeMap.set(8, "åtta");
+	        timeMap.set(9, "nio");
+	        timeMap.set(10, "tio");
+	        timeMap.set(11, "elva");
+	        timeMap.set(12, "tolv");
+	        return timeMap;
+	    };
 	    var date = props.time.realTime;
-	    var show = function show() {
-	        alert(date.seconds());
+	    var test = function test() {
+	        alert(textTime().get(12));
 	    };
 
 	    return _react2.default.createElement(
 	        'div',
 	        null,
 	        'This is home',
-	        _react2.default.createElement(_digitalClock2.default, null)
+	        _react2.default.createElement(_digitalClock2.default, null),
+	        _react2.default.createElement(
+	            'button',
+	            { onClick: test },
+	            'Tryck här'
+	        )
 	    );
 	};
 
@@ -37811,7 +37833,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -37825,69 +37847,83 @@
 	/*DigitalClock*/
 
 	var DigitalClock = function DigitalClock(props) {
-	    return _react2.default.createElement(
-	        'div',
+	  var seconds = function seconds() {
+	    var sec = props.time.realTime.seconds();
+	    if (sec < 10) {
+	      return '0' + sec;
+	    } else {
+	      return sec;
+	    }
+	  };
+	  var minutes = function minutes() {
+	    var min = props.time.realTime.minutes();
+	    if (min < 10) {
+	      return '0' + min;
+	    } else {
+	      return min;
+	    }
+	  };
+
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    props.time.realTime != null ? _react2.default.createElement(
+	      'table',
+	      { className: 'dcTable' },
+	      _react2.default.createElement(
+	        'tr',
 	        null,
 	        _react2.default.createElement(
-	            'h1',
-	            null,
-	            'Digital Clock'
+	          'th',
+	          { className: 'dcTableHead' },
+	          'Timme'
 	        ),
-	        props.time.realTime != null ? _react2.default.createElement(
-	            'table',
-	            { 'class': 'dcTable' },
-	            _react2.default.createElement(
-	                'tr',
-	                null,
-	                _react2.default.createElement(
-	                    'th',
-	                    { 'class': 'dcTableHead' },
-	                    'Hour'
-	                ),
-	                _react2.default.createElement(
-	                    'th',
-	                    { 'class': 'dcTableHead' },
-	                    'Minute'
-	                ),
-	                _react2.default.createElement(
-	                    'th',
-	                    { 'class': 'dcTableHead' },
-	                    'Second'
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'tr',
-	                null,
-	                _react2.default.createElement(
-	                    'td',
-	                    { 'class': 'dcTableData' },
-	                    props.time.realTime.hours()
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    { 'class': 'dcTableData' },
-	                    props.time.realTime.minutes()
-	                ),
-	                _react2.default.createElement(
-	                    'td',
-	                    { 'class': 'dcTableData' },
-	                    props.time.realTime.seconds()
-	                )
-	            )
-	        ) : null
-	    );
+	        _react2.default.createElement(
+	          'th',
+	          { className: 'dcTableHead' },
+	          'Minut'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          { className: 'dcTableHead' },
+	          'Sekund'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'td',
+	          { className: 'dcTableData' },
+	          props.time.realTime.hours()
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          { className: 'dcTableData' },
+	          ':',
+	          minutes()
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          { className: 'dcTableData' },
+	          ':',
+	          seconds()
+	        )
+	      )
+	    ) : null
+	  );
 	};
 
 	DigitalClock.propTypes = {
-	    time: _react.PropTypes.shape({
-	        realTime: _react.PropTypes.object.isRequired
-	    })
+	  time: _react.PropTypes.shape({
+	    realTime: _react.PropTypes.object.isRequired
+	  })
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {
-	    return {
-	        time: state.time
-	    };
+	  return {
+	    time: state.time
+	  };
 	};
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(DigitalClock);
