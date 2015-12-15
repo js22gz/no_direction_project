@@ -15,8 +15,10 @@ export default (state,action) => {
     case C.STOPWATCH_STOP:
         newstate.stopwatchOn=false;
         return newstate;
-    case C.STOPWATCH_TICK:
-        newstate.stopwatchTime+=action.increment;
+    case C.TICK:
+        if (state.stopwatchOn){
+            newstate.stopwatchTime+=1000;
+        }
         return newstate;
 
     default: return state || initialState().stopwatch;
