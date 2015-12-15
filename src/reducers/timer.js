@@ -14,8 +14,13 @@ export default (state,action) => {
     case C.TIMER_STOP:
         newstate.timerOn=false;
         return newstate;
-    case C.TIMER_TICK:
-        newstate.timerTime-=action.decrement;
+    case C.TICK:
+        if (state.timerOn){
+            newstate.timerTime-=1000;
+            if (newstate.timerTime <= 0){
+                newstate.timerOn=false;
+            }
+        }
         return newstate;
     default: return state || initialState().timer;
     }

@@ -25727,20 +25727,18 @@
 	*/
 
 	var C = {
-	    // TIME
-	    TIME_SET: 'TIME_SET',
+	    // GENERAL
+	    TICK: 'TICK',
 
 	    //TIMER
 	    TIMER_SET: 'TIMER_SET',
 	    TIMER_START: 'TIMER_START',
 	    TIMER_STOP: 'TIMER_STOP',
-	    TIMER_TICK: 'TIMER_TICK',
 
 	    //STOPWATCH
 	    STOPWATCH_RESET: 'STOPWATCH_RESET',
 	    STOPWATCH_START: 'STOPWATCH_START',
-	    STOPWATCH_STOP: 'STOPWATCH_STOP',
-	    STOPWATCH_TICK: 'STOPWATCH_TICK'
+	    STOPWATCH_STOP: 'STOPWATCH_STOP'
 	};
 
 	exports.default = C;
@@ -25799,8 +25797,13 @@
 	        case _constants2.default.TIMER_STOP:
 	            newstate.timerOn = false;
 	            return newstate;
-	        case _constants2.default.TIMER_TICK:
-	            newstate.timerTime -= action.decrement;
+	        case _constants2.default.TICK:
+	            if (state.timerOn) {
+	                newstate.timerTime -= 1000;
+	                if (newstate.timerTime <= 0) {
+	                    newstate.timerOn = false;
+	                }
+	            }
 	            return newstate;
 	        default:
 	            return state || (0, _initialstate2.default)().timer;
@@ -25840,8 +25843,10 @@
 	        case _constants2.default.STOPWATCH_STOP:
 	            newstate.stopwatchOn = false;
 	            return newstate;
-	        case _constants2.default.STOPWATCH_TICK:
-	            newstate.stopwatchTime += action.increment;
+	        case _constants2.default.TICK:
+	            if (state.stopwatchOn) {
+	                newstate.stopwatchTime += 1000;
+	            }
 	            return newstate;
 
 	        default:
@@ -25872,7 +25877,7 @@
 	exports.default = function (state, action) {
 	    var newstate = Object.assign({}, state); // sloppily copying the old state here, so we never mutate it
 	    switch (action.type) {
-	        case _constants2.default.TIME_SET:
+	        case _constants2.default.TICK:
 	            newstate.realTime = action.realTime;
 	            return newstate;
 
@@ -26213,25 +26218,11 @@
 	};
 
 	var Home = function Home(props) {
-
 	    return _react2.default.createElement(
 	        'div',
 	        null,
-	        'This is home',
-	        _react2.default.createElement(
-	            'table',
-	            { id: 'homeTable' },
-	            _react2.default.createElement(
-	                'td',
-	                null,
-	                _react2.default.createElement(_digitalClock2.default, null)
-	            ),
-	            _react2.default.createElement(
-	                'td',
-	                null,
-	                _react2.default.createElement(_textClock2.default, null)
-	            )
-	        )
+	        _react2.default.createElement(_textClock2.default, null),
+	        _react2.default.createElement(_digitalClock2.default, null)
 	    );
 	};
 
@@ -26293,7 +26284,7 @@
 	                var time = (0, _moment2.default)();
 
 	                dispatch({
-	                    type: _constants2.default.TIME_SET,
+	                    type: _constants2.default.TICK,
 	                    realTime: time
 	                });
 	                setTimeout(newTime, 1000);
@@ -26313,21 +26304,7 @@
 	        };
 	    },
 	    startTimer: function startTimer() {
-	        return function (dispatch, getState) {
-	            var tick = function tick() {
-	                if (getState().timer.timerOn && getState().timer.timerTime > 0) {
-	                    dispatch({
-	                        type: _constants2.default.TIMER_TICK,
-	                        decrement: 1000
-	                    });
-	                    setTimeout(tick, 1000);
-	                } else {
-	                    dispatch({ type: _constants2.default.TIMER_STOP });
-	                }
-	            };
-	            dispatch({ type: _constants2.default.TIMER_START });
-	            setTimeout(tick, 1000);
-	        };
+	        return { type: _constants2.default.TIMER_START };
 	    },
 	    stopTimer: function stopTimer() {
 	        return { type: _constants2.default.TIMER_STOP };
@@ -26341,19 +26318,7 @@
 	        return { type: _constants2.default.STOPWATCH_RESET };
 	    },
 	    startStopwatch: function startStopwatch() {
-	        return function (dispatch, getState) {
-	            var tick = function tick() {
-	                if (getState().stopwatch.stopwatchOn) {
-	                    dispatch({
-	                        type: _constants2.default.STOPWATCH_TICK,
-	                        increment: 1000
-	                    });
-	                    setTimeout(tick, 1000);
-	                }
-	            };
-	            dispatch({ type: _constants2.default.STOPWATCH_START });
-	            setTimeout(tick, 1000);
-	        };
+	        return { type: _constants2.default.STOPWATCH_START };
 	    },
 	    stopStopwatch: function stopStopwatch() {
 	        return { type: _constants2.default.STOPWATCH_STOP };

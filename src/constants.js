@@ -3,20 +3,18 @@ This file contains all constants in the app.
 */
 
 const C = {
-    // TIME
-    TIME_SET: 'TIME_SET',
+    // GENERAL
+    TICK: 'TICK',
 
     //TIMER
     TIMER_SET: 'TIMER_SET',
     TIMER_START: 'TIMER_START',
     TIMER_STOP: 'TIMER_STOP',
-    TIMER_TICK: 'TIMER_TICK',
 
     //STOPWATCH
     STOPWATCH_RESET: 'STOPWATCH_RESET',
     STOPWATCH_START: 'STOPWATCH_START',
-    STOPWATCH_STOP: 'STOPWATCH_STOP',
-    STOPWATCH_TICK: 'STOPWATCH_TICK'
+    STOPWATCH_STOP: 'STOPWATCH_STOP'
 };
 
 export default C;
