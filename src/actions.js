@@ -13,7 +13,7 @@ export default {
                 let time = moment();
 
                 dispatch({
-                    type: constants.TIME_SET,
+                    type: constants.TICK,
                     realTime: time
                 });
                 setTimeout(newTime,1000);
@@ -34,22 +34,7 @@ export default {
     },
 
     startTimer() {
-        return (dispatch,getState) => {
-            let tick = ()=> {
-                if (getState().timer.timerOn && getState().timer.timerTime>0){
-                    dispatch({
-                        type: constants.TIMER_TICK,
-                        decrement: 1000
-                    });
-                    setTimeout(tick,1000);
-                }
-                else {
-		            dispatch({ type: constants.TIMER_STOP });                	
-                }
-            };
-            dispatch({ type: constants.TIMER_START });
-            setTimeout(tick,1000);
-       };
+        return {type: constants.TIMER_START};
     },
 
     stopTimer() {
@@ -66,22 +51,9 @@ export default {
     },
 
     startStopwatch() {
-        return (dispatch,getState) => {
-            let tick = ()=> {
-                if (getState().stopwatch.stopwatchOn)
-                {
-	                dispatch({
-                        type: constants.STOPWATCH_TICK,
-                        increment: 1000
-                    });
-                        setTimeout(tick,1000);
-                }
-            };
-            dispatch({ type: constants.STOPWATCH_START });
-            setTimeout(tick,1000);
-  
-        };
+        return { type: constants.STOPWATCH_START };
     },
+
     stopStopwatch() {
     	return { type: constants.STOPWATCH_STOP};
     }

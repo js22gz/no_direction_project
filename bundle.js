@@ -25727,20 +25727,18 @@
 	*/
 
 	var C = {
-	    // TIME
-	    TIME_SET: 'TIME_SET',
+	    // GENERAL
+	    TICK: 'TICK',
 
 	    //TIMER
 	    TIMER_SET: 'TIMER_SET',
 	    TIMER_START: 'TIMER_START',
 	    TIMER_STOP: 'TIMER_STOP',
-	    TIMER_TICK: 'TIMER_TICK',
 
 	    //STOPWATCH
 	    STOPWATCH_RESET: 'STOPWATCH_RESET',
 	    STOPWATCH_START: 'STOPWATCH_START',
-	    STOPWATCH_STOP: 'STOPWATCH_STOP',
-	    STOPWATCH_TICK: 'STOPWATCH_TICK'
+	    STOPWATCH_STOP: 'STOPWATCH_STOP'
 	};
 
 	exports.default = C;
@@ -25799,8 +25797,13 @@
 	        case _constants2.default.TIMER_STOP:
 	            newstate.timerOn = false;
 	            return newstate;
-	        case _constants2.default.TIMER_TICK:
-	            newstate.timerTime -= action.decrement;
+	        case _constants2.default.TICK:
+	            if (state.timerOn) {
+	                newstate.timerTime -= 1000;
+	                if (newstate.timerTime <= 0) {
+	                    newstate.timerOn = false;
+	                }
+	            }
 	            return newstate;
 	        default:
 	            return state || (0, _initialstate2.default)().timer;
@@ -25840,8 +25843,10 @@
 	        case _constants2.default.STOPWATCH_STOP:
 	            newstate.stopwatchOn = false;
 	            return newstate;
-	        case _constants2.default.STOPWATCH_TICK:
-	            newstate.stopwatchTime += action.increment;
+	        case _constants2.default.TICK:
+	            if (state.stopwatchOn) {
+	                newstate.stopwatchTime += 1000;
+	            }
 	            return newstate;
 
 	        default:
@@ -25872,7 +25877,7 @@
 	exports.default = function (state, action) {
 	    var newstate = Object.assign({}, state); // sloppily copying the old state here, so we never mutate it
 	    switch (action.type) {
-	        case _constants2.default.TIME_SET:
+	        case _constants2.default.TICK:
 	            newstate.realTime = action.realTime;
 	            return newstate;
 
@@ -25903,11 +25908,11 @@
 
 	var _home2 = _interopRequireDefault(_home);
 
-	var _timer = __webpack_require__(331);
+	var _timer = __webpack_require__(332);
 
 	var _timer2 = _interopRequireDefault(_timer);
 
-	var _stopwatch = __webpack_require__(332);
+	var _stopwatch = __webpack_require__(333);
 
 	var _stopwatch2 = _interopRequireDefault(_stopwatch);
 
@@ -26202,42 +26207,20 @@
 
 	var _digitalClock2 = _interopRequireDefault(_digitalClock);
 
+	var _textClock = __webpack_require__(331);
+
+	var _textClock2 = _interopRequireDefault(_textClock);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Home = function Home(props) {
-
-	    var textTime = function textTime() {
-	        //hours
-	        var timeMap = new Map();
-	        timeMap.set(1, "ett");
-	        timeMap.set(2, "två");
-	        timeMap.set(3, "tre");
-	        timeMap.set(4, "fyra");
-	        timeMap.set(5, "fem");
-	        timeMap.set(6, "sex");
-	        timeMap.set(7, "sju");
-	        timeMap.set(8, "åtta");
-	        timeMap.set(9, "nio");
-	        timeMap.set(10, "tio");
-	        timeMap.set(11, "elva");
-	        timeMap.set(12, "tolv");
-	        return timeMap;
-	    };
-	    var date = props.time.realTime;
-	    var test = function test() {
-	        alert(textTime().get(12));
-	    };
 
 	    return _react2.default.createElement(
 	        'div',
 	        null,
 	        'This is home',
 	        _react2.default.createElement(_digitalClock2.default, null),
-	        _react2.default.createElement(
-	            'button',
-	            { onClick: test },
-	            'Tryck här'
-	        )
+	        _react2.default.createElement(_textClock2.default, null)
 	    );
 	};
 
@@ -26299,7 +26282,7 @@
 	                var time = (0, _moment2.default)();
 
 	                dispatch({
-	                    type: _constants2.default.TIME_SET,
+	                    type: _constants2.default.TICK,
 	                    realTime: time
 	                });
 	                setTimeout(newTime, 1000);
@@ -26319,21 +26302,7 @@
 	        };
 	    },
 	    startTimer: function startTimer() {
-	        return function (dispatch, getState) {
-	            var tick = function tick() {
-	                if (getState().timer.timerOn && getState().timer.timerTime > 0) {
-	                    dispatch({
-	                        type: _constants2.default.TIMER_TICK,
-	                        decrement: 1000
-	                    });
-	                    setTimeout(tick, 1000);
-	                } else {
-	                    dispatch({ type: _constants2.default.TIMER_STOP });
-	                }
-	            };
-	            dispatch({ type: _constants2.default.TIMER_START });
-	            setTimeout(tick, 1000);
-	        };
+	        return { type: _constants2.default.TIMER_START };
 	    },
 	    stopTimer: function stopTimer() {
 	        return { type: _constants2.default.TIMER_STOP };
@@ -26347,19 +26316,7 @@
 	        return { type: _constants2.default.STOPWATCH_RESET };
 	    },
 	    startStopwatch: function startStopwatch() {
-	        return function (dispatch, getState) {
-	            var tick = function tick() {
-	                if (getState().stopwatch.stopwatchOn) {
-	                    dispatch({
-	                        type: _constants2.default.STOPWATCH_TICK,
-	                        increment: 1000
-	                    });
-	                    setTimeout(tick, 1000);
-	                }
-	            };
-	            dispatch({ type: _constants2.default.STOPWATCH_START });
-	            setTimeout(tick, 1000);
-	        };
+	        return { type: _constants2.default.STOPWATCH_START };
 	    },
 	    stopStopwatch: function stopStopwatch() {
 	        return { type: _constants2.default.STOPWATCH_STOP };
@@ -37864,6 +37821,15 @@
 	    }
 	  };
 
+	  var hours = function hours() {
+	    var hour = props.time.realTime.hours();
+	    if (hour < 10) {
+	      return '0' + hour;
+	    } else {
+	      return hour;
+	    }
+	  };
+
 	  return _react2.default.createElement(
 	    'div',
 	    null,
@@ -37895,7 +37861,7 @@
 	        _react2.default.createElement(
 	          'td',
 	          { className: 'dcTableData' },
-	          props.time.realTime.hours()
+	          hours()
 	        ),
 	        _react2.default.createElement(
 	          'td',
@@ -37930,6 +37896,153 @@
 
 /***/ },
 /* 331 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(210);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/***************
+	Text clock
+	***************/
+
+	var textTimeHour = function textTimeHour() {
+		var timeMap = new Map();
+		timeMap.set(1, "ett");
+		timeMap.set(2, "två");
+		timeMap.set(3, "tre");
+		timeMap.set(4, "fyra");
+		timeMap.set(5, "fem");
+		timeMap.set(6, "sex");
+		timeMap.set(7, "sju");
+		timeMap.set(8, "åtta");
+		timeMap.set(9, "nio");
+		timeMap.set(10, "tio");
+		timeMap.set(11, "elva");
+		timeMap.set(12, "tolv");
+		timeMap.set(13, "ett");
+		timeMap.set(14, "två");
+		timeMap.set(15, "tre");
+		timeMap.set(16, "fyra");
+		timeMap.set(17, "fem");
+		timeMap.set(18, "sex");
+		timeMap.set(19, "sju");
+		timeMap.set(20, "åtta");
+		timeMap.set(21, "nio");
+		timeMap.set(22, "tio");
+		timeMap.set(23, "elva");
+		timeMap.set(24, "tolv");
+		return timeMap;
+	};
+
+	var textTimeMinute = function textTimeMinute() {
+		var timeMap = new Map();
+		timeMap.set(0, "");
+		timeMap.set(1, "en");
+		timeMap.set(2, "två");
+		timeMap.set(3, "tre");
+		timeMap.set(4, "fyra");
+		timeMap.set(5, "fem");
+		timeMap.set(6, "sex");
+		timeMap.set(7, "sju");
+		timeMap.set(8, "åtta");
+		timeMap.set(9, "nio");
+		timeMap.set(10, "tio");
+		timeMap.set(11, "elva");
+		timeMap.set(12, "tolv");
+		timeMap.set(13, "tretton");
+		timeMap.set(14, "fjorton");
+		timeMap.set(15, "femton");
+		timeMap.set(16, "sexton");
+		timeMap.set(17, "sjutton");
+		timeMap.set(18, "arton");
+		timeMap.set(19, "nitton");
+		timeMap.set(20, "tjugo");
+		timeMap.set(30, "trettio");
+		return timeMap;
+	};
+
+	var getTextTimeAccurate = function getTextTimeAccurate(timeNow) {
+		var firstToUpperCase = function firstToUpperCase(str) {
+			return str.substr(0, 1).toUpperCase() + str.substr(1);
+		};
+		var minute = timeNow.minutes(),
+		    returnTime = '';
+		if (minute === 0) {
+			return firstToUpperCase(textTimeHour().get(timeNow.hours()));
+		}
+
+		if (minute > 30) {
+			minute = 60 - minute;
+		}
+
+		if (minute > 20) {
+			returnTime += textTimeMinute().get(Math.floor(minute / 10) * 10);
+			returnTime += textTimeMinute().get(minute % 10);
+		} else {
+			returnTime += textTimeMinute().get(minute);
+		}
+
+		if (minute < 2) {
+			returnTime += ' minut';
+		} else {
+			returnTime += ' minuter';
+		}
+
+		if (timeNow.minutes() > 30) {
+			returnTime += ' i';
+			returnTime += ' ' + textTimeHour().get(timeNow.hours() + 1);
+		} else {
+			returnTime += ' över';
+			returnTime += ' ' + textTimeHour().get(timeNow.hours());
+		}
+		return firstToUpperCase(returnTime);
+	};
+
+	var TextClock = function TextClock(props) {
+
+		return _react2.default.createElement(
+			'div',
+			null,
+			props.time.realTime != null ? _react2.default.createElement(
+				'section',
+				null,
+				_react2.default.createElement(
+					'h1',
+					null,
+					'Texttid: ',
+					getTextTimeAccurate(props.time.realTime)
+				)
+			) : null
+		);
+	};
+
+	TextClock.propTypes = {
+		time: _react.PropTypes.shape({
+			realTime: _react.PropTypes.object.isRequired
+		})
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+		return {
+			time: state.time
+		};
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(TextClock);
+
+/***/ },
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38039,7 +38152,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Timer);
 
 /***/ },
-/* 332 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
