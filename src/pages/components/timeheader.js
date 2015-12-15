@@ -1,6 +1,7 @@
-import React, {PropTypes} from 'react'
-import {connect} from 'react-redux'
-import convertTime from '../utils'
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {convertTime} from '../../utils';
+import moment from 'moment';
 
 let inlineStyle = { 
                     display:"inline", 
@@ -15,14 +16,18 @@ let TimeHeader =(props)=>
         tOn = props.timer.timerOn,
         tTime = props.timer.timerTime
 
+    let test = ()=> {
+        alert("Test");
+        alert("Tid: "+convertTime(swTime));
+    }
 
     return <div>
             <h1 style={inlineStyle}>No direction project</h1>
             {(swOn || swTime>0)
-            ?<h2 style={inlineStyle}>Stopwatch: {swTime}</h2>
+            ?<h2 style={inlineStyle}>Stopwatch: {convertTime(swTime)}</h2>
             :null }
             {(tOn || tTime>0)                
-            ?<h2 style={inlineStyle}>Timer: {tTime}</h2>
+            ?<h2 style={inlineStyle}>Timer: {convertTime(tTime)}</h2>
             :null }
             </div>
 }

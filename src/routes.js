@@ -4,10 +4,10 @@ This is the "sitemap" of our app!
 
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
-import {Wrapper} from './components/wrapper';
-import Home from './components/home';
-import Timer from './components/timer';
-import Stopwatch from './components/stopwatch';
+import {Wrapper} from './pages/wrapper';
+import Home from './pages/home';
+import Timer from './pages/timer';
+import Stopwatch from './pages/stopwatch';
 
 export default (
 	<Route component={Wrapper} path="/" >

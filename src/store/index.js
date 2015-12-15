@@ -1,11 +1,10 @@
 /*
-This file defines the main Redux Store. It will be required by all 'smart' components in the app,
-in our case Home and Hero.
+This file defines the main Redux Store. It will be required by all 'smart' components in the app.
 */
 
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import initialState from './initialstate';
 import thunk from 'redux-thunk'; // allows us to use asynchronous actions
+import initialState from './initialstate';
 import timerReducer from './reducers/timer';
 import stopwatchReducer from './reducers/stopwatch';
 import timeReducer from './reducers/time';

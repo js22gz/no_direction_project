@@ -4,8 +4,8 @@ contained in `this.props.children` and rendered out.
 */
 
 import React from 'react';
-import Nav from "./nav";
-import TimeHeader from './timeheader';
+import Nav from "./components/nav";
+import TimeHeader from './components/timeheader';
 
 export class Wrapper extends React.Component {
     render() {

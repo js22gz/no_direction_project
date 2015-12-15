@@ -1,9 +1,8 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import actions from '../actions';
-import DigitalClock from './clocks/digitalClock';
-import TextClock from './clocks/textClock';
-
+import DigitalClock from './components/digitalClock';
+import TextClock from './components/textClock';
 
 let test = {
     color: 'blue'
