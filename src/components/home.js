@@ -4,12 +4,15 @@ import actions from '../actions';
 import DigitalClock from './clocks/digitalClock';
 import TextClock from './clocks/textClock';
 
-let Home = (props)=>{
 
+let test = {
+    color: 'blue'
+}
+
+let Home = (props)=>{
         return <div>
-                This is home
+                <TextClock />
                 <DigitalClock/>
-                <TextClock/>
             </div>;
 }
 

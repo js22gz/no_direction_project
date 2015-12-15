@@ -52,13 +52,13 @@ let textTimeMinute =()=> {
 	timeMap.set(12, "tolv");
 	timeMap.set(13, "tretton");
 	timeMap.set(14, "fjorton");
-	timeMap.set(15, "femton");
+	timeMap.set(15, "kvart");
 	timeMap.set(16, "sexton");
 	timeMap.set(17, "sjutton");
 	timeMap.set(18, "arton");
 	timeMap.set(19, "nitton");
 	timeMap.set(20, "tjugo");
-	timeMap.set(30, "trettio");
+	timeMap.set(30, "halv");
 	return timeMap;
 }
 
@@ -75,7 +75,6 @@ let getTextTimeAccurate = (timeNow)=> {
 	if(minute>30) {
 		minute=60-minute;
 	}
-
 	if(minute>20) {
 		returnTime+=textTimeMinute().get(Math.floor(minute/10)*10);
 		returnTime+=textTimeMinute().get((minute%10));
@@ -84,9 +83,12 @@ let getTextTimeAccurate = (timeNow)=> {
 		returnTime+=textTimeMinute().get(minute);
 	}
 
-	if(minute<2) {
+	if(minute===1) {
 		returnTime+= ' minut';
-	}		
+	}
+	else if(minute===15 || minute===30) {
+		returnTime+='';
+	}
 	else {
 		returnTime+= ' minuter';
 	}
@@ -95,6 +97,9 @@ let getTextTimeAccurate = (timeNow)=> {
 		returnTime+= ' i';
 		returnTime+= ' '+textTimeHour().get(timeNow.hours()+1);
 	}
+	else if(timeNow.minutes()===30) {
+		returnTime+=' '+textTimeHour().get(timeNow.hours()+1);
+	}
 	else {
 		returnTime+= ' över';			
 		returnTime+= ' '+textTimeHour().get(timeNow.hours());
@@ -102,14 +107,11 @@ let getTextTimeAccurate = (timeNow)=> {
 	return firstToUpperCase(returnTime);
 }
 
-
 let TextClock = (props)=> {
 
-	return <div>
+	return <div className="tcDiv">
 	{(props.time.realTime!=null)
-	?<section>
-	<h1>Texttid: {getTextTimeAccurate(props.time.realTime)}</h1>
-	</section>
+	?<span>{getTextTimeAccurate(props.time.realTime)}</span>
 	:null
 	}
 	</div>

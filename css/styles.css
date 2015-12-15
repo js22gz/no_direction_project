@@ -1,22 +1,23 @@
+body {
+}
+
+
+
+.tcDiv {
+	color:black;
+	font-size: 3em;
+}
+
 .dcTable {
-	background-color:grey;
 	padding:1em;
 }
 
 .dcTableHead{
-	color:maroon;
 	font-size:1em;
 }
 
 .dcTableData {
-	color:black;
 	font-size:3em;
 }
 
-TextClock {
-	display: inline;
-}
 
-DigitalClock {
-	display: inline;
-}
