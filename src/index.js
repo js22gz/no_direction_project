@@ -22,4 +22,8 @@ render(
 setTimeout(function(){
 	store.dispatch(actions.startTime());
 });
-
+/**
+setTimeout(function(){
+      alert(window.innerWidth);
+});
+**/

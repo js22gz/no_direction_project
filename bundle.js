@@ -82,6 +82,11 @@
 	setTimeout(function () {
 		_store2.default.dispatch(_actions2.default.startTime());
 	});
+	/**
+	setTimeout(function(){
+	      alert(window.innerWidth);
+	});
+	**/
 
 /***/ },
 /* 1 */
@@ -25908,11 +25913,11 @@
 
 	var _home2 = _interopRequireDefault(_home);
 
-	var _timer = __webpack_require__(332);
+	var _timer = __webpack_require__(334);
 
 	var _timer2 = _interopRequireDefault(_timer);
 
-	var _stopwatch = __webpack_require__(333);
+	var _stopwatch = __webpack_require__(335);
 
 	var _stopwatch2 = _interopRequireDefault(_stopwatch);
 
@@ -25966,6 +25971,12 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               contained in `this.props.children` and rendered out.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
 
+	var wStyle = {
+	    font: "1em 'Georgia', serif",
+	    background: "#FFFFFF",
+	    color: "#000000"
+	};
+
 	var Wrapper = exports.Wrapper = (function (_React$Component) {
 	    _inherits(Wrapper, _React$Component);
 
@@ -25980,7 +25991,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'wrapper' },
+	                { className: 'wrapper', style: wStyle },
 	                _react2.default.createElement(_timeheader2.default, null),
 	                _react2.default.createElement(_nav2.default, null),
 	                this.props.children
@@ -26124,7 +26135,7 @@
 	        _react2.default.createElement(
 	            'h1',
 	            { style: inlineStyle },
-	            'No direction project'
+	            'Vad är tid?'
 	        ),
 	        swOn || swTime > 0 ? _react2.default.createElement(
 	            'h2',
@@ -37678,6 +37689,14 @@
 
 	var _textClock2 = _interopRequireDefault(_textClock);
 
+	var _analogClock = __webpack_require__(332);
+
+	var _analogClock2 = _interopRequireDefault(_analogClock);
+
+	var _pendulum = __webpack_require__(333);
+
+	var _pendulum2 = _interopRequireDefault(_pendulum);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var test = {
@@ -37688,8 +37707,10 @@
 	    return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(_pendulum2.default, null),
 	        _react2.default.createElement(_textClock2.default, null),
-	        _react2.default.createElement(_digitalClock2.default, null)
+	        _react2.default.createElement(_digitalClock2.default, null),
+	        _react2.default.createElement(_analogClock2.default, null)
 	    );
 	};
 
@@ -37812,6 +37833,25 @@
 
 	/*DigitalClock*/
 
+	var styleDiv = {
+	  width: '300px'
+	};
+
+	var styleTable = {
+	  width: '300px',
+	  padding: '1em',
+	  border: '5px solid grey',
+	  borderRadius: '10px'
+	};
+
+	var styleTableHead = {
+	  fontSize: '1em'
+	};
+
+	var styleTableData = {
+	  fontSize: '3em'
+	};
+
 	var DigitalClock = function DigitalClock(props) {
 	  var seconds = function seconds() {
 	    var sec = props.time.realTime.seconds();
@@ -37841,13 +37881,13 @@
 
 	  return _react2.default.createElement(
 	    'div',
-	    null,
+	    { style: styleDiv },
 	    props.time.realTime != null ? _react2.default.createElement(
 	      'table',
-	      { className: 'dcTable' },
+	      { className: 'dcTable', style: styleTable },
 	      _react2.default.createElement(
 	        'tr',
-	        null,
+	        { style: styleTableHead },
 	        _react2.default.createElement(
 	          'th',
 	          { className: 'dcTableHead' },
@@ -37866,7 +37906,7 @@
 	      ),
 	      _react2.default.createElement(
 	        'tr',
-	        null,
+	        { style: styleTableData },
 	        _react2.default.createElement(
 	          'td',
 	          { className: 'dcTableData' },
@@ -37875,13 +37915,11 @@
 	        _react2.default.createElement(
 	          'td',
 	          { className: 'dcTableData' },
-	          ':',
 	          minutes()
 	        ),
 	        _react2.default.createElement(
 	          'td',
 	          { className: 'dcTableData' },
-	          ':',
 	          seconds()
 	        )
 	      )
@@ -37924,6 +37962,17 @@
 	/***************
 	Text clock
 	***************/
+
+	var styleDiv = {
+		width: '240px',
+		background: '#CCCCCC',
+		border: '5px solid #666666',
+		padding: '1em',
+		borderRadius: '5px',
+		color: 'black',
+		fontSize: '25px',
+		fontWeight: 'bold'
+	};
 
 	var textTimeHour = function textTimeHour() {
 		var timeMap = new Map();
@@ -38025,7 +38074,7 @@
 
 		return _react2.default.createElement(
 			'div',
-			{ className: 'tcDiv' },
+			{ className: 'tcDiv', style: styleDiv },
 			props.time.realTime != null ? _react2.default.createElement(
 				'span',
 				null,
@@ -38050,6 +38099,228 @@
 
 /***/ },
 /* 332 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(210);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*DigitalClock
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               From: http://www.w3schools.com/canvas/canvas_clock_start.asp
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+
+	var aClockStyle = {
+	    backgroundColor: "grey"
+	};
+
+	var AnalogClock = (function (_React$Component) {
+	    _inherits(AnalogClock, _React$Component);
+
+	    function AnalogClock() {
+	        _classCallCheck(this, AnalogClock);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(AnalogClock).apply(this, arguments));
+	    }
+
+	    _createClass(AnalogClock, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var canvas = _react2.default.findDOMNode(this.refs.canvas);
+	            var ctx = canvas.getContext("2d");
+	            var radius = canvas.height / 2;
+	            ctx.translate(radius, radius);
+	            radius = radius * 0.90;
+
+	            var drawClock = function drawClock() {
+	                drawFace(ctx, radius);
+	                drawNumbers(ctx, radius);
+	                drawTime(ctx, radius);
+	            };
+
+	            var drawTime = function drawTime(ctx, radius) {
+	                var now = new Date();
+	                var hour = now.getHours();
+	                var minute = now.getMinutes();
+	                var second = now.getSeconds();
+	                //hour
+	                hour = hour % 12;
+	                hour = hour * Math.PI / 6 + minute * Math.PI / (6 * 60) + second * Math.PI / (360 * 60);
+	                drawHand(ctx, hour, radius * 0.5, radius * 0.07);
+	                //minute
+	                minute = minute * Math.PI / 30 + second * Math.PI / (30 * 60);
+	                drawHand(ctx, minute, radius * 0.8, radius * 0.07);
+	                // second
+	                second = second * Math.PI / 30;
+	                drawHand(ctx, second, radius * 0.9, radius * 0.02);
+	            };
+
+	            var drawHand = function drawHand(ctx, pos, length, width) {
+	                ctx.beginPath();
+	                ctx.lineWidth = width;
+	                ctx.lineCap = "round";
+	                ctx.moveTo(0, 0);
+	                ctx.rotate(pos);
+	                ctx.lineTo(0, -length);
+	                ctx.stroke();
+	                ctx.rotate(-pos);
+	            };
+
+	            var drawNumbers = function drawNumbers(ctx, radius) {
+	                var ang = undefined;
+	                var num = undefined;
+	                ctx.font = radius * 0.15 + "px arial";
+	                ctx.textBaseline = "middle";
+	                ctx.textAlign = "center";
+	                for (num = 1; num < 13; num++) {
+	                    ang = num * Math.PI / 6;
+	                    ctx.rotate(ang);
+	                    ctx.translate(0, -radius * 0.85);
+	                    ctx.rotate(-ang);
+	                    ctx.fillText(num.toString(), 0, 0);
+	                    ctx.rotate(ang);
+	                    ctx.translate(0, radius * 0.85);
+	                    ctx.rotate(-ang);
+	                }
+	            };
+
+	            var drawFace = function drawFace(ctx, radius) {
+	                var grad = undefined;
+	                ctx.beginPath();
+	                ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+	                ctx.fillStyle = 'white';
+	                ctx.fill();
+	                grad = ctx.createRadialGradient(0, 0, radius * 0.95, 0, 0, radius * 1.05);
+	                grad.addColorStop(0, '#333');
+	                grad.addColorStop(0.5, 'white');
+	                grad.addColorStop(1, '#333');
+	                ctx.strokeStyle = grad;
+	                ctx.lineWidth = radius * 0.1;
+	                ctx.stroke();
+	                ctx.beginPath();
+	                ctx.arc(0, 0, radius * 0.1, 0, 2 * Math.PI);
+	                ctx.fillStyle = '#333';
+	                ctx.fill();
+	            };
+
+	            setInterval(drawClock, 1000);
+	            // drawClock();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+
+	            return _react2.default.createElement('canvas', { ref: 'canvas', width: '300', height: '300', style: aClockStyle });
+	        }
+	    }]);
+
+	    return AnalogClock;
+	})(_react2.default.Component);
+
+	AnalogClock.propTypes = {
+	    time: _react.PropTypes.shape({
+	        realTime: _react.PropTypes.object.isRequired
+	    })
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        time: state.time
+	    };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(AnalogClock);
+
+/***/ },
+/* 333 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(210);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*DigitalClock
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               From: http://www.w3schools.com/canvas/canvas_clock_start.asp
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+
+	var aClockStyle = {
+	    backgroundColor: "grey"
+	};
+
+	var Pendulum = (function (_React$Component) {
+	    _inherits(Pendulum, _React$Component);
+
+	    function Pendulum() {
+	        _classCallCheck(this, Pendulum);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Pendulum).apply(this, arguments));
+	    }
+
+	    _createClass(Pendulum, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'Pendulum'
+	            );
+	        }
+	    }]);
+
+	    return Pendulum;
+	})(_react2.default.Component);
+
+	Pendulum.propTypes = {
+	    time: _react.PropTypes.shape({
+	        realTime: _react.PropTypes.object.isRequired
+	    })
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        time: state.time
+	    };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Pendulum);
+
+/***/ },
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38159,7 +38430,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Timer);
 
 /***/ },
-/* 333 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

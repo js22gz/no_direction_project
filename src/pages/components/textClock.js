@@ -4,6 +4,16 @@ Text clock
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 
+let styleDiv = {
+	width:'240px',
+	background:'#CCCCCC',
+	border: '5px solid #666666',
+	padding:'1em',
+	borderRadius:'5px',
+	color:'black',
+	fontSize: '25px',
+	fontWeight:'bold'
+};
 
 let textTimeHour =()=>{
 	let timeMap = new Map();
@@ -109,7 +119,7 @@ let getTextTimeAccurate = (timeNow)=> {
 
 let TextClock = (props)=> {
 
-	return <div className="tcDiv">
+	return <div className="tcDiv" style={styleDiv}>
 	{(props.time.realTime!=null)
 	?<span>{getTextTimeAccurate(props.time.realTime)}</span>
 	:null

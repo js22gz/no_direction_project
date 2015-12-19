@@ -22,7 +22,7 @@ let TimeHeader =(props)=>
     }
 
     return <div>
-            <h1 style={inlineStyle}>No direction project</h1>
+            <h1 style={inlineStyle}>Vad är tid?</h1>
             {(swOn || swTime>0)
             ?<h2 style={inlineStyle}>Stopwatch: {convertTime(swTime)}</h2>
             :null }

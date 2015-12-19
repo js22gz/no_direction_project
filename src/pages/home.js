@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import actions from '../actions';
 import DigitalClock from './components/digitalClock';
 import TextClock from './components/textClock';
+import AnalogClock from './components/analogClock';
+import Pendulum from './components/pendulum';
 
 let test = {
     color: 'blue'
@@ -10,8 +12,10 @@ let test = {
 
 let Home = (props)=>{
         return <div>
+                <Pendulum/>
                 <TextClock />
                 <DigitalClock/>
+                <AnalogClock/>
             </div>;
 }
 
