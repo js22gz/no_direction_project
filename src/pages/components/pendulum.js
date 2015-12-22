@@ -1,9 +1,7 @@
-/*DigitalClock
-From: http://www.w3schools.com/canvas/canvas_clock_start.asp
-*/
-
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
+
+
 
 var aClockStyle = {
   backgroundColor:"grey"
@@ -13,14 +11,14 @@ var aClockStyle = {
 class Pendulum extends React.Component {
 
     componentDidMount(){
+        let canvas = React.findDOMNode(this.refs.canvas);
+        let ctx = canvas.getContext("2d");
     }
 
 
-
     render() {
-
         return (
-        <h1>Pendulum</h1>
+            <canvas height="200" width="50" ref="canvas"></canvas>
         );
     }
 }

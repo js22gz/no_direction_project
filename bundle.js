@@ -37699,8 +37699,12 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var test = {
-	    color: 'blue'
+	var holderStyle = {
+	    alignSelf: 'center'
+	};
+
+	var timeStyle = {
+	    display: 'flex'
 	};
 
 	var Home = function Home(props) {
@@ -37708,9 +37712,25 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_pendulum2.default, null),
-	        _react2.default.createElement(_textClock2.default, null),
-	        _react2.default.createElement(_digitalClock2.default, null),
-	        _react2.default.createElement(_analogClock2.default, null)
+	        _react2.default.createElement(
+	            'div',
+	            { style: timeStyle },
+	            _react2.default.createElement(
+	                'div',
+	                { style: holderStyle },
+	                _react2.default.createElement(_analogClock2.default, null)
+	            ),
+	            _react2.default.createElement(
+	                'div',
+	                { style: holderStyle },
+	                _react2.default.createElement(_digitalClock2.default, null)
+	            ),
+	            _react2.default.createElement(
+	                'div',
+	                { style: holderStyle },
+	                _react2.default.createElement(_textClock2.default, null)
+	            )
+	        )
 	    );
 	};
 
@@ -37838,10 +37858,13 @@
 	};
 
 	var styleTable = {
-	  width: '300px',
+	  width: '250px',
+	  margin: '3px',
 	  padding: '1em',
-	  border: '5px solid grey',
-	  borderRadius: '10px'
+	  background: '#CCCCCC',
+	  border: '10px solid #666666',
+	  padding: '1em',
+	  borderRadius: '5px'
 	};
 
 	var styleTableHead = {
@@ -37964,16 +37987,19 @@
 	***************/
 
 	var styleDiv = {
-		width: '240px',
+		width: '300px',
+		margin: '3px',
 		background: '#CCCCCC',
-		border: '5px solid #666666',
+		border: '10px solid #666666',
 		padding: '1em',
 		borderRadius: '5px',
 		color: 'black',
 		fontSize: '25px',
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		textAlign: 'center'
 	};
 
+	//	WebkitTransform:'perspective( 600px ) rotateY( 45deg )'
 	var textTimeHour = function textTimeHour() {
 		var timeMap = new Map();
 		timeMap.set(1, "ett");
@@ -38074,10 +38100,10 @@
 
 		return _react2.default.createElement(
 			'div',
-			{ className: 'tcDiv', style: styleDiv },
+			{ className: 'tcDiv' },
 			props.time.realTime != null ? _react2.default.createElement(
-				'span',
-				null,
+				'div',
+				{ style: styleDiv },
 				getTextTimeAccurate(props.time.realTime)
 			) : null
 		);
@@ -38270,9 +38296,7 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*DigitalClock
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               From: http://www.w3schools.com/canvas/canvas_clock_start.asp
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var aClockStyle = {
 	    backgroundColor: "grey"
@@ -38289,16 +38313,14 @@
 
 	    _createClass(Pendulum, [{
 	        key: 'componentDidMount',
-	        value: function componentDidMount() {}
+	        value: function componentDidMount() {
+	            var canvas = _react2.default.findDOMNode(this.refs.canvas);
+	            var ctx = canvas.getContext("2d");
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'Pendulum'
-	            );
+	            return _react2.default.createElement('canvas', { height: '200', width: '50', ref: 'canvas' });
 	        }
 	    }]);
 
@@ -38435,6 +38457,8 @@
 
 	'use strict';
 
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -38451,51 +38475,195 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Stopwatch = function Stopwatch(props) {
-	    var swOn = props.stopwatch.stopwatchOn;
-	    var swTime = props.stopwatch.stopwatchTime;
-	    var getMinutes = Math.floor(swTime / 1000 / 60);
-	    var getSeconds = ('0' + swTime / 1000 % 60).slice(-2);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	            'p',
-	            null,
-	            'On: ',
-	            swOn.toString()
-	        ),
-	        _react2.default.createElement(
-	            'p',
-	            null,
-	            'Time:',
-	            getMinutes,
-	            ':',
-	            getSeconds
-	        ),
-	        !swOn ? _react2.default.createElement(
-	            'button',
-	            { onClick: props.startStopwatch },
-	            'Start'
-	        ) : _react2.default.createElement(
-	            'button',
-	            { onClick: props.stopStopwatch },
-	            'Stop'
-	        ),
-	        !swOn && swTime > 0 ? _react2.default.createElement(
-	            'button',
-	            { onClick: props.resetStopwatch },
-	            'Reset'
-	        ) : null
-	    );
-	}; /*
-	   Stopwatch
-	   
-	    start
-	    stop
-	    reset
-	   */
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Stopwatch
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                start
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stop
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                reset
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+
+	var holderStyle = {
+	    textAlign: "center"
+	};
+
+	var btnStyle = {
+	    height: "50px",
+	    width: "50px",
+	    background: "#FFFF99",
+	    borderRadius: "50%",
+	    border: '5px groove #FFCC00',
+	    margin: "0px"
+	};
+
+	var btnClockStyle = {};
+
+	var canvasStyle = {
+	    margin: "0px"
+	};
+
+	var Stopwatch = (function (_React$Component) {
+	    _inherits(Stopwatch, _React$Component);
+
+	    function Stopwatch() {
+	        _classCallCheck(this, Stopwatch);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Stopwatch).apply(this, arguments));
+	    }
+
+	    _createClass(Stopwatch, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            var canvas = _react2.default.findDOMNode(this.refs.swClock);
+	            var ctx = canvas.getContext("2d");
+	            var radius = canvas.height / 2;
+	            var getMinutes = Math.floor(this.props.stopwatch.stopwatchTime / 1000 / 60);
+	            var getSeconds = this.props.stopwatch.stopwatchTime / 1000 % 60;
+
+	            ctx.translate(radius, radius);
+	            radius = radius * 0.98;
+
+	            var drawClock = function drawClock() {
+
+	                ctx.beginPath();
+	                ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+	                ctx.fillStyle = '#FFFF99';
+	                ctx.fill();
+	                //            let grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+	                var grad = ctx.createRadialGradient(0, 0, radius * 0.95, 0, 0, radius * 1.02);
+	                grad.addColorStop(0, '#FFFF99');
+	                grad.addColorStop(0.5, '#FFFF99');
+	                grad.addColorStop(1, '#FF9900');
+	                ctx.strokeStyle = grad;
+	                ctx.lineWidth = radius * 0.03;
+	                ctx.stroke();
+	                ctx.beginPath();
+	                ctx.arc(0, 0, radius * 0.05, 0, 2 * Math.PI);
+	                ctx.fillStyle = '#000000';
+	                ctx.fill();
+
+	                var second = _this2.props.stopwatch.stopwatchTime;
+	                second = second / 1000 % 60;
+	                second = second * Math.PI / 30;
+	                //drawPins(ctx,radius);
+	                drawNumbers(ctx, radius);
+	                drawHand(ctx, second, radius * 0.8, radius * 0.04);
+	                setTimeout(drawClock);
+	            };
+
+	            var drawPins = function drawPins(ctx, radius) {
+	                var length = radius * 0.1;
+	                var ang = undefined;
+	                ctx.beginPath();
+	                ctx.strokeStyle = "green";
+	                ctx.lineWidth = radius * 0.02;
+	                ctx.lineCap = "square";
+
+	                for (var i = 1; i < 61; i++) {
+	                    ang = i * Math.PI / 12;
+	                    ctx.rotate(ang);
+	                    ctx.translate(0, -radius * 0.85);
+	                    ctx.rotate(-ang);
+	                    ctx.lineTo(0, -length);
+	                    ctx.stroke();
+	                    ctx.rotate(ang);
+	                    ctx.translate(0, radius * 0.85);
+	                    ctx.rotate(-ang);
+	                }
+	            };
+
+	            var drawNumbers = function drawNumbers(ctx, radius) {
+	                var ang = undefined;
+	                var num = undefined;
+	                ctx.font = radius * 0.12 + "px arial";
+	                ctx.fillStyle = "#000000";
+	                ctx.textBaseline = "middle";
+	                ctx.textAlign = "center";
+	                for (num = 1; num < 13; num++) {
+	                    ang = num * Math.PI / 6;
+	                    ctx.rotate(ang);
+	                    ctx.translate(0, -radius * 0.85);
+	                    ctx.rotate(-ang);
+	                    var txt = num * 5;
+	                    ctx.fillText(txt.toString(), 0, 0);
+	                    ctx.rotate(ang);
+	                    ctx.translate(0, radius * 0.85);
+	                    ctx.rotate(-ang);
+	                }
+
+	                var gm = Math.floor(_this2.props.stopwatch.stopwatchTime / 1000 / 60);
+	                var gs = ('0' + _this2.props.stopwatch.stopwatchTime / 1000 % 60).slice(-2);
+	                ctx.font = radius * 0.3 + "px arial";
+	                ctx.fillText(gm.toString() + ":" + gs.toString(), 0, -radius * 0.3);
+	            };
+
+	            var drawHand = function drawHand(ctx, pos, length, width) {
+	                ctx.beginPath();
+	                ctx.lineWidth = width;
+	                ctx.lineCap = "round";
+	                ctx.strokeStyle = "#000000";
+	                ctx.moveTo(0, 0);
+	                ctx.rotate(pos);
+	                ctx.lineTo(0, -length);
+	                ctx.stroke();
+	                ctx.rotate(-pos);
+	            };
+	            drawClock();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var swOn = this.props.stopwatch.stopwatchOn;
+	            var swTime = this.props.stopwatch.stopwatchTime;
+	            var getMinutes = Math.floor(swTime / 1000 / 60);
+	            var getSeconds = ('0' + swTime / 1000 % 60).slice(-2);
+
+	            return _react2.default.createElement(
+	                'div',
+	                { style: holderStyle },
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Time:',
+	                    getMinutes,
+	                    ':',
+	                    getSeconds
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: btnClockStyle },
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        !swOn ? _react2.default.createElement(
+	                            'button',
+	                            { style: btnStyle, onClick: this.props.startStopwatch },
+	                            'Start'
+	                        ) : _react2.default.createElement(
+	                            'button',
+	                            { style: btnStyle, onClick: this.props.stopStopwatch },
+	                            'Stop'
+	                        ),
+	                        !swOn && swTime > 0 ? _react2.default.createElement(
+	                            'button',
+	                            { onClick: this.props.resetStopwatch },
+	                            'Reset'
+	                        ) : null
+	                    ),
+	                    _react2.default.createElement('canvas', { ref: 'swClock', width: '500', height: '500', style: canvasStyle })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Stopwatch;
+	})(_react2.default.Component);
 
 	Stopwatch.propTypes = {
 	    stopwatch: _react.PropTypes.shape({
@@ -38526,8 +38694,31 @@
 	        }
 	    };
 	};
-
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Stopwatch);
+
+	/**
+	let Stopwatch = (props) => 
+	{
+	    let swOn = props.stopwatch.stopwatchOn;
+	    let swTime =  props.stopwatch.stopwatchTime;
+	    let getMinutes = Math.floor((swTime/1000)/60);
+	    let getSeconds = ('0'+swTime/1000%60).slice(-2);
+
+	    return  <div> 
+	                <canvas ref="swClock" width="300" height="300"></canvas>
+	                <p>Time:{getMinutes}:{getSeconds}</p>
+	                {(!swOn)
+	                    ?<button onClick={props.startStopwatch}>Start</button>
+	                    :<button onClick={props.stopStopwatch}>Stop</button>
+	                }
+	                {(!swOn&&swTime>0)
+	                    ?<button onClick={props.resetStopwatch}>Reset</button>
+	                    :null
+	                }
+	            </div>;
+
+	}
+	**/
 
 /***/ }
 /******/ ]);

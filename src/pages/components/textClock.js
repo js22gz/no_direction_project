@@ -5,14 +5,17 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 
 let styleDiv = {
-	width:'240px',
-	background:'#CCCCCC',
-	border: '5px solid #666666',
+  width:'300px',
+  	margin:'3px',
+  	background:'#CCCCCC',
+	border: '10px solid #666666',
 	padding:'1em',
 	borderRadius:'5px',
 	color:'black',
 	fontSize: '25px',
-	fontWeight:'bold'
+	fontWeight:'bold',
+	textAlign:'center',
+//	WebkitTransform:'perspective( 600px ) rotateY( 45deg )'
 };
 
 let textTimeHour =()=>{
@@ -119,12 +122,12 @@ let getTextTimeAccurate = (timeNow)=> {
 
 let TextClock = (props)=> {
 
-	return <div className="tcDiv" style={styleDiv}>
+	return (<div className="tcDiv">
 	{(props.time.realTime!=null)
-	?<span>{getTextTimeAccurate(props.time.realTime)}</span>
+	?<div style={styleDiv}>{getTextTimeAccurate(props.time.realTime)}</div>
 	:null
 	}
-	</div>
+	</div>);
 }
 
 TextClock.propTypes = {

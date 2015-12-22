@@ -6,16 +6,28 @@ import TextClock from './components/textClock';
 import AnalogClock from './components/analogClock';
 import Pendulum from './components/pendulum';
 
-let test = {
-    color: 'blue'
+let holderStyle = {
+    alignSelf:'center'
+}
+
+let timeStyle = {
+    display: 'flex',
 }
 
 let Home = (props)=>{
         return <div>
                 <Pendulum/>
-                <TextClock />
-                <DigitalClock/>
-                <AnalogClock/>
+                <div style={timeStyle}>    
+                    <div style={holderStyle}>
+                        <AnalogClock/>
+                    </div>
+                    <div style={holderStyle}>
+                        <DigitalClock/>
+                </div>
+                    <div style={holderStyle}>
+                        <TextClock />
+                    </div>
+            </div>
             </div>;
 }
 

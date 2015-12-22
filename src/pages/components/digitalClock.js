@@ -8,10 +8,13 @@ let styleDiv = {
 };
 
 let styleTable = {
-  width:'300px',
+  width:'250px',
+  margin:'3px',
   padding:'1em',
-  border:'5px solid grey',
-  borderRadius:'10px',
+  background:'#CCCCCC',
+  border: '10px solid #666666',
+  padding:'1em',
+  borderRadius:'5px',
 };
 
 let styleTableHead = {
