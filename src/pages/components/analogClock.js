@@ -12,12 +12,20 @@ var aClockStyle = {
 
 class AnalogClock extends React.Component {
 
-    componentDidMount(){
-         let canvas = React.findDOMNode(this.refs.canvas);
-          let ctx = canvas.getContext("2d");
-          let radius = canvas.height / 2;
-          ctx.translate(radius, radius);
-          radius = radius * 0.90;
+    componentDidMount() {
+      
+      this.canvas = React.findDOMNode(this.refs.canvas);
+      this.ctx = this.canvas.getContext("2d");
+      this.radius = this.canvas.height / 2;
+      this.ctx.translate(this.radius, this.radius);
+      this.radius = this.radius * 0.90;
+
+    }
+
+    componentDidUpdate(){
+      let canvas = this.canvas;
+      let ctx = this.ctx;
+      let radius = this.radius;
 
       let drawClock = ()=> {
           drawFace(ctx,radius);
@@ -90,8 +98,8 @@ class AnalogClock extends React.Component {
 
       };
 
-      setInterval(drawClock,1000);
-     // drawClock();
+      //setInterval(drawClock,1000);
+     drawClock();
 
     }
 

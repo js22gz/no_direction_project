@@ -26135,7 +26135,7 @@
 	        _react2.default.createElement(
 	            'h1',
 	            { style: inlineStyle },
-	            'Vad är tid?'
+	            'Tiden'
 	        ),
 	        swOn || swTime > 0 ? _react2.default.createElement(
 	            'h2',
@@ -38167,11 +38167,21 @@
 	    _createClass(AnalogClock, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            var canvas = _react2.default.findDOMNode(this.refs.canvas);
-	            var ctx = canvas.getContext("2d");
-	            var radius = canvas.height / 2;
-	            ctx.translate(radius, radius);
-	            radius = radius * 0.90;
+
+	            this.canvas = _react2.default.findDOMNode(this.refs.canvas);
+	            this.ctx = this.canvas.getContext("2d");
+	            this.radius = this.canvas.height / 2;
+	            this.ctx.translate(this.radius, this.radius);
+	            this.radius = this.radius * 0.90;
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            var _this2 = this;
+
+	            var canvas = this.canvas;
+	            var ctx = this.ctx;
+	            var radius = this.radius;
 
 	            var drawClock = function drawClock() {
 	                drawFace(ctx, radius);
@@ -38180,10 +38190,9 @@
 	            };
 
 	            var drawTime = function drawTime(ctx, radius) {
-	                var now = new Date();
-	                var hour = now.getHours();
-	                var minute = now.getMinutes();
-	                var second = now.getSeconds();
+	                var hour = _this2.props.time.realTime.hours();
+	                var minute = _this2.props.time.realTime.minutes();
+	                var second = _this2.props.time.realTime.seconds();
 	                //hour
 	                hour = hour % 12;
 	                hour = hour * Math.PI / 6 + minute * Math.PI / (6 * 60) + second * Math.PI / (360 * 60);
@@ -38244,8 +38253,8 @@
 	                ctx.fill();
 	            };
 
-	            setInterval(drawClock, 1000);
-	            // drawClock();
+	            //setInterval(drawClock,1000);
+	            drawClock();
 	        }
 	    }, {
 	        key: 'render',
