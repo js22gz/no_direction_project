@@ -26,10 +26,9 @@ class AnalogClock extends React.Component {
       };
 
       let drawTime = (ctx, radius)=> {
-           var now = new Date();
-          var hour = now.getHours();
-          var minute = now.getMinutes();
-          var second = now.getSeconds();
+       let hour = this.props.time.realTime.hours()
+       let minute = this.props.time.realTime.minutes()
+       let second = this.props.time.realTime.seconds()
           //hour
           hour=hour%12;
           hour=(hour*Math.PI/6)+(minute*Math.PI/(6*60))+(second*Math.PI/(360*60));
