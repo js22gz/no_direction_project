@@ -25913,11 +25913,11 @@
 
 	var _home2 = _interopRequireDefault(_home);
 
-	var _timer = __webpack_require__(334);
+	var _timer = __webpack_require__(333);
 
 	var _timer2 = _interopRequireDefault(_timer);
 
-	var _stopwatch = __webpack_require__(335);
+	var _stopwatch = __webpack_require__(334);
 
 	var _stopwatch2 = _interopRequireDefault(_stopwatch);
 
@@ -37693,10 +37693,6 @@
 
 	var _analogClock2 = _interopRequireDefault(_analogClock);
 
-	var _pendulum = __webpack_require__(333);
-
-	var _pendulum2 = _interopRequireDefault(_pendulum);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var holderStyle = {
@@ -37711,7 +37707,6 @@
 	    return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_pendulum2.default, null),
 	        _react2.default.createElement(
 	            'div',
 	            { style: timeStyle },
@@ -38287,75 +38282,6 @@
 
 	'use strict';
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(210);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var aClockStyle = {
-	    backgroundColor: "grey"
-	};
-
-	var Pendulum = (function (_React$Component) {
-	    _inherits(Pendulum, _React$Component);
-
-	    function Pendulum() {
-	        _classCallCheck(this, Pendulum);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Pendulum).apply(this, arguments));
-	    }
-
-	    _createClass(Pendulum, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var canvas = _react2.default.findDOMNode(this.refs.canvas);
-	            var ctx = canvas.getContext("2d");
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement('canvas', { height: '200', width: '50', ref: 'canvas' });
-	        }
-	    }]);
-
-	    return Pendulum;
-	})(_react2.default.Component);
-
-	Pendulum.propTypes = {
-	    time: _react.PropTypes.shape({
-	        realTime: _react.PropTypes.object.isRequired
-	    })
-	};
-
-	var mapStateToProps = function mapStateToProps(state) {
-	    return {
-	        time: state.time
-	    };
-	};
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Pendulum);
-
-/***/ },
-/* 334 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -38461,7 +38387,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Timer);
 
 /***/ },
-/* 335 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

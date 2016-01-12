@@ -4,7 +4,6 @@ import actions from '../actions';
 import DigitalClock from './components/digitalClock';
 import TextClock from './components/textClock';
 import AnalogClock from './components/analogClock';
-import Pendulum from './components/pendulum';
 
 let holderStyle = {
     alignSelf:'center'
@@ -16,7 +15,6 @@ let timeStyle = {
 
 let Home = (props)=>{
         return <div>
-                <Pendulum/>
                 <div style={timeStyle}>    
                     <div style={holderStyle}>
                         <AnalogClock/>
