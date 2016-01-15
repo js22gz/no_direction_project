@@ -4,7 +4,6 @@ import actions from '../actions';
 import DigitalClock from './components/digitalClock';
 import TextClock from './components/textClock';
 import AnalogClock from './components/analogClock';
-import CurrentDate from './components/currentDate';
 
 let holderStyle = {
     alignSelf:'center'
@@ -14,26 +13,18 @@ let timeStyle = {
     display: 'flex',
 }
 
-let dateStyle = {
-    fontWeight: "bold",
-    marginBottom: "10px"
-}
-
 let Home = (props)=>{
         return <div>
-            <div style={dateStyle}>
-                <CurrentDate />
-            </div> 
-            <div style={timeStyle}>     
-                <div style={holderStyle}>
-                    <AnalogClock/>
+                <div style={timeStyle}>    
+                    <div style={holderStyle}>
+                        <AnalogClock/>
+                    </div>
+                    <div style={holderStyle}>
+                        <DigitalClock/>
                 </div>
-                <div style={holderStyle}>
-                    <DigitalClock/>
-                </div>
-                <div style={holderStyle}>
-                    <TextClock />
-            </div>
+                    <div style={holderStyle}>
+                        <TextClock />
+                    </div>
             </div>
             </div>;
 }
